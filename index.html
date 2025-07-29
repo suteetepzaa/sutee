@@ -17,6 +17,22 @@
       margin-top: 10px;
       color: #d9534f;
     }
+
+    .button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
   </style>
   <script>
     function startCountdown() {
@@ -42,6 +58,10 @@
       }, 1000);
     }
 
+    function showAlert() {
+      alert("ระบบไม่พร้อมให้บริการ กลับมาใหม่อีกครั้ง 17 ส.ค.");
+    }
+
     window.onload = startCountdown;
   </script>
 </head>
@@ -55,5 +75,8 @@
   <div style="text-align: center; margin-bottom: 10px;">สอบถามติดต่อ Email ตามภาพ</div>
 
   <div id="countdown"></div>
+
+  <!-- ปุ่มเข้าสู่หน้าหลัก -->
+  <button class="button" onclick="showAlert()">เข้าสู่หน้าหลัก</button>
 </body>
 </html>
