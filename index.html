@@ -1,5 +1,59 @@
-<div style="text-align: center; margin-bottom: 10px;">Updated 29 กรกฎาคม 2568</div>
-<div style="text-align: center; margin-bottom: 10px;">ปิดหน้าเว็บถึงวันที่ 17 ส.ค. 68</div>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown</title>
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif;
+      background-color: #f8f9fa;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #countdown {
+      font-size: 28px;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #d9534f;
+    }
+  </style>
+  <script>
+    function startCountdown() {
+      const countDownDate = new Date("August 17, 2025 23:00:00 GMT+0700").getTime();
+
+      const x = setInterval(function () {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("countdown").innerHTML = "หมดเวลาแล้ว";
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+          `เหลือเวลา ${days} วัน ${hours} ชม. ${minutes} นาที ${seconds} วินาที`;
+      }, 1000);
+    }
+
+    window.onload = startCountdown;
+  </script>
+</head>
+<body>
+  <div style="text-align: center; margin-bottom: 10px;">Updated 29 กรกฎาคม 2568</div>
+  <div style="text-align: center; margin-bottom: 10px;">ปิดหน้าเว็บถึงวันที่ 17 ส.ค. 68</div>
+
   <img src="3.jpg" alt="Me" width="800"
     style="display: block; margin: 0 auto 20px auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); border-radius: 8px;">
-<div style="text-align: center; margin-bottom: 10px;">สอบถามติดต่อ Email ตามภาพ</div>
+
+  <div style="text-align: center; margin-bottom: 10px;">สอบถามติดต่อ Email ตามภาพ</div>
+
+  <div id="countdown"></div>
+</body>
+</html>
