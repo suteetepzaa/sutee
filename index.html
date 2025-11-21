@@ -19,16 +19,25 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: #0c142c; 
+            /* *** เปลี่ยนพื้นหลังเป็นเคลื่อนไหวด้วย CSS Gradient Animation *** */
+            background: linear-gradient(-45deg, #1e3a8a, #0c142c, #4a0031, #2d001b);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite; /* แอนิเมชั่น 15s */
+            
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            /* *** ปรับ Perspective ให้สูงขึ้นเล็กน้อยเพื่อความสมูท *** */
-            perspective: 1800px; 
+            perspective: 1800px;
             overflow: hidden;
-            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); 
+        }
+
+        /* *** Keyframes สำหรับพื้นหลังเคลื่อนไหว *** */
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* ------------------------------------- */
@@ -48,8 +57,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            /* *** ปรับ Cubic Bezier เพื่อให้ดูนุ่มนวลและเป็นธรรมชาติยิ่งขึ้น *** */
-            transition: transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* เพิ่มเวลาเป็น 1.5s และใช้ curve ใหม่ */
+            /* *** ปรับเวลา transition ให้เร็วขึ้น (จาก 1.5s -> 1s) *** */
+            transition: transform 1s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
             border-radius: 10px;
         }
         
@@ -242,26 +251,23 @@
             }
         }
         
-        // *** 2. Flip Card Function ***
+        // *** 2. Flip Card Function (ปรับเวลาการพลิก) ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
             
-            // พลิกการ์ด
             wrapper.classList.toggle('flipped'); 
 
             if (wrapper.classList.contains('flipped')) {
-                // เมื่อพลิกการ์ด: อัปเดต UI ปุ่ม
                 button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
                 button.style.backgroundColor = '#0c142c';
                 button.style.color = 'var(--secondary-color)';
                 
-                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดเสร็จ (1.5 วินาที)
+                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดเสร็จ (1 วินาที เพราะ transition = 1s)
                 if (!typingStarted) {
-                    setTimeout(typeWriter, 1500); 
+                    setTimeout(typeWriter, 1000); 
                 }
             } else {
-                // เมื่อพลิกกลับ: อัปเดต UI ปุ่ม
                 button.textContent = 'เปิดผนึกจดหมาย';
                 button.style.backgroundColor = 'var(--primary-color)';
                 button.style.color = 'white';
