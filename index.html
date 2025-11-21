@@ -3,276 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💌 จดหมายรักที่ดีที่สุด</title>
+    <title>💌 ข้อความวิ่งจากใจ</title>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap'); 
         
         :root {
-            --primary-color: #FF69B4; /* Pastel Pink - หลัก */
-            --secondary-color: #FFD700; /* Gold - สำรอง */
-            --bg-color: #ffffff; /* White - พื้นหลังการ์ด */
+            --main-color: #FF69B4; /* Pastel Pink - สีหลัก */
+            --bg-color: #F8F8FF; /* Ghost White - สีพื้นหลังอ่อนๆ */
             --text-color: #4a4a4a; /* Dark Gray - สีข้อความ */
-            --font-serif: 'Playfair Display', serif;
-            --font-sans: 'Sarabun', sans-serif;
-            --pastel-blue: #a7d9f7;
-            --pastel-pink: #ffc0cb;
-            --pastel-purple: #e0b0ff;
-            --pastel-yellow: #fffacd;
-            --pastel-green: #b2f2bb;
         }
 
         body {
-            font-family: var(--font-sans);
-            /* พื้นหลัง Gradient เคลื่อนไหว โทนพาสเทล */
-            background: linear-gradient(-45deg, var(--pastel-blue), var(--pastel-pink), var(--pastel-purple), var(--pastel-yellow));
-            background-size: 400% 400%;
-            animation: gradientBackground 15s ease infinite; 
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            perspective: 1800px;
-            overflow: hidden; 
-            position: relative;
-        }
-
-        @keyframes gradientBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ------------------------------------- */
-        /* Floating Hearts Background */
-        /* ------------------------------------- */
-        .floating-heart {
-            position: absolute;
-            font-size: 1.2em; 
-            animation: floatUp linear infinite;
-            pointer-events: none; 
-            opacity: 0; 
-            text-shadow: 0 0 3px rgba(255, 105, 180, 0.4);
-            z-index: 1; 
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0.6); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-100px) scale(1.0); opacity: 0; }
-        }
-
-        /* ------------------------------------- */
-        /* ส่วนของ Card (จดหมาย) */
-        /* ------------------------------------- */
-        .love-card-wrapper {
-            width: 380px;
-            height: 500px;
-            position: relative;
-            z-index: 10; 
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); 
-            border-radius: 15px; 
-        }
-
-        .love-card {
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            /* Transition 1 วินาที (สมูทและรวดเร็ว) */
-            transition: transform 1s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
-            border-radius: 15px;
-        }
-        
-        .flipped .love-card {
-            transform: rotateY(180deg);
-        }
-
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color); /* พื้นหลังสีเดียว */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
-            border-radius: 15px;
-            box-sizing: border-box;
-            background-color: var(--bg-color);
-            border: 1px solid #eee;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden; /* ป้องกันการเลื่อนที่ไม่จำเป็น */
         }
 
-        /* ด้านหน้าของการ์ด (ซองจดหมาย) */
-        .card-front {
+        /* ------------------------------------- */
+        /* ข้อความวิ่ง (Marquee) */
+        /* ------------------------------------- */
+        .running-message {
+            font-size: 1.5em;
+            color: var(--main-color);
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            padding: 10px 0;
+            margin-bottom: 30px;
+            border-top: 2px solid var(--main-color);
+            border-bottom: 2px solid var(--main-color);
+        }
+
+        /* ------------------------------------- */
+        /* กล่องข้อความหลัก */
+        /* ------------------------------------- */
+        .container {
             background-color: #ffffff;
-            border-left: 10px solid var(--primary-color);
-        }
-
-        .card-front h2 {
-            font-family: var(--font-serif);
-            font-size: 2.5em;
-            color: var(--primary-color);
-            margin-top: 20px;
-        }
-        
-        .card-front p {
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
-            color: var(--text-color);
+            max-width: 550px;
+            animation: fadeIn 2s ease-in-out;
+            opacity: 0; /* ซ่อนไว้ก่อน Typing Effect จะเริ่ม */
         }
 
-        .card-front .seal {
-            font-size: 70px;
-            color: var(--secondary-color);
-            animation: breathe 3s infinite alternate; 
-        }
-
-        @keyframes breathe {
-            from { opacity: 0.8; transform: scale(1); }
-            to { opacity: 1; transform: scale(1.05); }
-        }
-
-        /* ด้านหลังของการ์ด (เนื้อจดหมาย) - มีรูปเล็กๆ */
-        .card-back {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transform: rotateY(180deg);
-            text-align: left;
-            justify-content: flex-start;
-            padding-top: 50px;
-            position: relative; 
-        }
-
-        /* *** รูปภาพขนาดเล็กด้านหลังจดหมาย: จัดวางสมดุล *** */
-        .card-back .small-image {
-            position: absolute;
-            bottom: 25px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            
-            width: 90px; 
-            height: 90px;
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 4px solid var(--primary-color); 
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); 
-            z-index: 2; 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* สไตล์สำหรับข้อความที่พิมพ์เอง */
         .typing-container {
-            min-height: 150px;
-            overflow: hidden;
-            border-left: 3px solid var(--primary-color); 
-            padding-left: 15px;
+            min-height: 120px;
+            text-align: left;
+            padding: 10px;
             line-height: 1.8;
             font-size: 1.1em;
-            font-weight: 300;
-            color: var(--text-color); 
-            /* เว้นพื้นที่ให้รูปภาพ */
-            margin-bottom: 120px; 
+            color: var(--text-color);
         }
 
         .typing-container strong {
-            color: var(--primary-color); 
-            font-weight: 600;
+            color: var(--main-color);
+            font-weight: 700;
         }
 
         .signature {
-            margin-top: 30px;
+            margin-top: 20px;
+            color: var(--main-color);
+            font-style: italic;
             text-align: right;
-            font-family: var(--font-serif);
-            font-size: 1.2em;
-            color: var(--primary-color); 
-            width: 100%;
-        }
-
-        /* ปุ่มเปิดผนึก */
-        #open-button {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.1em;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 20;
-            box-shadow: 0 5px 15px rgba(144, 12, 63, 0.4);
-        }
-        
-        #open-button:hover {
-            background-color: #d15694; 
-            transform: translateX(-50%) scale(1.05);
-        }
-        
-        .flipped #open-button {
-            background-color: var(--secondary-color); 
-            color: var(--primary-color);
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
 
-    <div class="love-card-wrapper" id="card-wrapper">
-        <div class="love-card">
-            
-            <div class="card-face card-front">
-                <div class="seal">✉️</div>
-                <h2>An Eternal Letter</h2>
-                <p style="font-style: italic; color: var(--text-color);">
-                    ถึง **[ชื่อคนที่คุณรัก]**<br>
-                    มีข้อความสำคัญรอคุณอยู่ โปรดเปิดผนึก...
-                </p>
-            </div>
-            
-            <div class="card-face card-back">
-                <h3>จากฉัน ถึงคุณ</h3>
-                
-                <div id="typing-text" class="typing-container">
-                    </div>
+    <marquee class="running-message" behavior="scroll" direction="right" scrollamount="10" id="intro-marquee">
+        💖 ข้อความนี้ถูกสร้างขึ้นเพื่อคุณโดยเฉพาะ 💖 **[ชื่อคนที่คุณรัก]** คุณคือคนสำคัญของฉัน 💖
+    </marquee>
 
-                <div class="signature">
-                    รักเสมอ<br>
-                    **[ชื่อของคุณ]**
-                </div>
-
-                <img src="https://images.unsplash.com/photo-1540307525203-aa94e50ae808?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bG92ZXx8fHx8fDE3MDkwMjYxNjg&ixlib=rb-4.0.3&q=80&w=1080" 
-                     alt="รูปภาพเล็กๆ น่ารัก" class="small-image">
-            </div>
-            
-        </div>
+    <div class="container" id="main-content">
+        <h1 style="color: var(--main-color);">สารจากใจ</h1>
         
-        <button id="open-button" onclick="flipCard()">
-            เปิดผนึกจดหมาย
-        </button>
+        <div id="typing-text" class="typing-container">
+            </div>
+
+        <div class="signature">
+            ด้วยรักที่สุด<br>
+            จาก **[ชื่อของคุณ]**
+        </div>
     </div>
 
     <script>
         // *** 1. Typing Effect Code ***
         const message = 
-            "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
-            "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
-            "ฉันอยากจะมอบทุกอย่างที่มีให้คุณ และเดินเคียงข้างคุณตลอดไป " +
-            "**ฉันรักคุณที่สุดในจักรวาลนี้**";
+            "สวัสดีครับ/ค่ะ **[ชื่อคนที่คุณรัก]**! " +
+            "คุณคงเห็นข้อความวิ่งข้างบนแล้วใช่ไหม? " +
+            "นี่คือสิ่งที่ฉันอยากบอกคุณจริงๆ: " +
+            "คุณคือความสุขของฉันในทุกๆ วัน และฉันโชคดีที่มีคุณอยู่ในชีวิต " +
+            "**ขอบคุณที่อยู่เคียงข้างกันเสมอมา ฉันรักคุณ!**";
         
         let i = 0;
         const speed = 50; 
         const typingElement = document.getElementById("typing-text");
-        let typingStarted = false;
+        const mainContent = document.getElementById("main-content");
 
         function typeWriter() {
-            typingStarted = true;
             if (i < message.length) {
                 let char = message.charAt(i);
                 
+                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
                 if (char === '*' && message.substring(i, i + 2) === '**') {
                     typingElement.innerHTML += '<strong>';
                     i += 2; 
@@ -294,58 +145,26 @@
             }
         }
         
-        // *** 2. Flip Card Function ***
-        function flipCard() {
-            const wrapper = document.getElementById('card-wrapper');
-            const button = document.getElementById('open-button');
+        // 2. ควบคุมการแสดงผลตามข้อความวิ่ง
+        window.onload = function() {
+            const marquee = document.getElementById('intro-marquee');
             
-            wrapper.classList.toggle('flipped'); 
-
-            if (wrapper.classList.contains('flipped')) {
-                button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
-                button.style.backgroundColor = 'var(--secondary-color)'; 
-                button.style.color = 'var(--primary-color)';
+            // ประมาณเวลาที่ข้อความวิ่งจะเสร็จสิ้น (ขึ้นอยู่กับความยาวข้อความและ scrollamount)
+            // ตัวอย่าง: ความยาวข้อความ * ความเร็ว (100ms) + เวลาเริ่มต้น (2s)
+            const estimatedTime = 7000; // 7 วินาที
+            
+            setTimeout(() => {
+                // ซ่อนข้อความวิ่ง
+                marquee.style.display = 'none';
                 
-                if (!typingStarted) {
-                    setTimeout(typeWriter, 1000); 
-                }
-            } else {
-                button.textContent = 'เปิดผนึกจดหมาย';
-                button.style.backgroundColor = 'var(--primary-color)';
-                button.style.color = 'white';
-            }
-        }
-
-        // *** 3. Floating Hearts JavaScript ***
-        const heartCount = 40; 
-        const heartsContainer = document.body;
-        const pastelHeartColors = ['#FFC0CB', '#FFB6C1', '#FF69B4', '#F08080', '#E6E6FA', '#ADD8E6', '#90EE90'];
-
-        function createHeart() {
-            const heart = document.createElement('span');
-            heart.classList.add('floating-heart');
-            heart.innerHTML = '💖'; 
-            
-            const randomColor = pastelHeartColors[Math.floor(Math.random() * pastelHeartColors.length)];
-            heart.style.color = randomColor;
-
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 8 + 7 + 's'; 
-            heart.style.animationDelay = Math.random() * 5 + 's';
-            heart.style.fontSize = Math.random() * 0.8 + 0.8 + 'em'; 
-            
-            heartsContainer.appendChild(heart);
-            
-            heart.addEventListener('animationend', () => {
-                heart.remove();
-            });
-        }
-
-        for (let j = 0; j < heartCount; j++) {
-            createHeart();
-        }
-
-        setInterval(createHeart, 400); 
+                // แสดงกล่องข้อความหลักด้วยแอนิเมชั่น fadeIn
+                mainContent.style.opacity = '1';
+                
+                // เริ่มพิมพ์ข้อความ
+                typeWriter();
+                
+            }, estimatedTime);
+        };
     </script>
 </body>
 </html>
