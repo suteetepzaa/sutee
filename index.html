@@ -6,24 +6,61 @@
 <title>รักเธอที่สุด 💖</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
-  body, html{margin:0;padding:0;width:100%;height:100%;font-family:'Kanit', sans-serif;overflow:hidden;background: linear-gradient(135deg, #ffe6f0, #ffd1d9);display:flex;align-items:center;justify-content:center;}
+  body, html{
+    margin:0;padding:0;width:100%;height:100%;font-family:'Kanit', sans-serif;
+    overflow:hidden;
+    background: linear-gradient(135deg, #ffe6f0, #ffd1d9);
+    display:flex;align-items:center;justify-content:center;
+  }
   .container{position:relative;text-align:center;}
-  h1{font-size:3rem;color:#ff4ecb;margin:0;text-shadow:2px 2px 8px rgba(255,78,203,0.4);}
-  p{font-size:1.5rem;color:#ff1a75;margin:12px 0;}
+  h1{
+    font-size:3rem;
+    color:#ff4ecb;
+    margin:0;
+    text-shadow:2px 2px 12px rgba(255,78,203,0.6);
+    animation:heartbeat 1s infinite;
+  }
+  @keyframes heartbeat{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+  }
+  p{font-size:1.5rem;color:#ff1a75;margin:12px 0;text-shadow:1px 1px 4px rgba(255,78,203,0.5);}
   .btn{margin-top:20px;padding:12px 24px;border:none;border-radius:24px;background:#ff4ecb;color:white;font-size:1.2rem;cursor:pointer;box-shadow:0 6px 20px rgba(255,78,203,0.4);transition:0.3s;}
   .btn:hover{transform:scale(1.05);}
-  .heart{position:absolute;width:20px;height:20px;background:#ff4ecb;transform:rotate(45deg);animation:fall 5s linear infinite;opacity:0.8;}
+
+  /* ลูกเล่นหัวใจ */
+  .heart{position:absolute;width:20px;height:20px;background:#ff4ecb;transform:rotate(45deg);opacity:0.8;animation:fall 5s linear infinite;}
   .heart:before,.heart:after{content:'';position:absolute;width:20px;height:20px;background:#ff4ecb;border-radius:50%;}
   .heart:before{top:-10px;left:0;}
   .heart:after{left:10px;top:0;}
   @keyframes fall{0%{transform:translateY(0) rotate(45deg) scale(0.5);opacity:1;} 100%{transform:translateY(100vh) rotate(45deg) scale(1);opacity:0;}}
+
+  /* กล่องข้อความเซอร์ไพรส์ */
+  .popup{
+    position:fixed;
+    top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+    background:#ffe6f0;
+    padding:30px 40px;
+    border-radius:20px;
+    box-shadow:0 10px 40px rgba(255,78,203,0.5);
+    text-align:center;
+    transition:0.5s;
+    z-index:10;
+  }
+  .popup.show{transform:translate(-50%,-50%) scale(1);}
+  .popup h2{margin:0;color:#ff1a75;}
+  .popup button{margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:#ff4ecb;color:white;cursor:pointer;}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>รักเธอที่สุด 💖</h1>
   <p>ถึง [ชื่อแฟนของคุณ] ♥</p>
-  <button class="btn" onclick="surprise()">กดดูเซอร์ไพรส์</button>
+  <button class="btn" onclick="showPopup()">กดดูเซอร์ไพรส์</button>
+</div>
+<div class="popup" id="popup">
+  <h2>คุณคือคนพิเศษที่สุดในชีวิตของฉัน 💖</h2>
+  <button onclick="closePopup()">ปิด</button>
 </div>
 <script>
 function createHeart(){
@@ -36,10 +73,13 @@ function createHeart(){
   document.body.appendChild(heart);
   setTimeout(()=>{document.body.removeChild(heart)},5000);
 }
-setInterval(createHeart,300);
+setInterval(createHeart,200);
 
-function surprise(){
-  alert('คุณคือคนพิเศษที่สุดในชีวิตของฉัน 💖');
+function showPopup(){
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup(){
+  document.getElementById('popup').classList.remove('show');
 }
 </script>
 </body>
