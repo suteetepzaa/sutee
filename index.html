@@ -1,54 +1,268 @@
+
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💌 ข้อความจากใจ</title>
-    <link rel="stylesheet" href="style.css">
+    <title>🕯️ จดหมายเปิดผนึก</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
+        
+        :root {
+            --primary-color: #900C3F; /* Burgundy/Deep Red */
+            --secondary-color: #FFC300; /* Gold Accent */
+            --bg-color: #fcfcfc; /* Near White */
+            --text-color: #333;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Sarabun', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #0c142c; /* Midnight Blue Background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            perspective: 1500px; /* เพิ่มมิติ 3D */
+            overflow: hidden;
+            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); /* ไล่สีพื้นหลัง */
+        }
+
+        /* ------------------------------------- */
+        /* ส่วนของ Card (จดหมาย) */
+        /* ------------------------------------- */
+        .love-card-wrapper {
+            width: 380px;
+            height: 500px;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .love-card {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1); /* แอนิเมชั่นพลิกที่นุ่มนวล */
+            border-radius: 10px;
+        }
+        
+        /* สั่งพลิกการ์ดเมื่อคลาส 'flipped' ถูกเพิ่ม */
+        .flipped .love-card {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            background-color: var(--bg-color);
+            border: 1px solid #ddd;
+        }
+
+        /* ด้านหน้าของการ์ด (ซองจดหมาย) */
+        .card-front {
+            background-color: #f7f7f7;
+            border-left: 10px solid var(--primary-color);
+        }
+
+        .card-front h2 {
+            font-family: var(--font-serif);
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+        
+        .card-front .seal {
+            font-size: 70px;
+            color: var(--secondary-color);
+            animation: breathe 3s infinite alternate; /* แอนิเมชั่นหัวใจเรืองแสง */
+        }
+
+        @keyframes breathe {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* ด้านหลังของการ์ด (เนื้อจดหมาย) */
+        .card-back {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transform: rotateY(180deg);
+            text-align: left;
+            justify-content: flex-start;
+            padding-top: 50px;
+        }
+        
+        .card-back h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* สไตล์สำหรับข้อความที่พิมพ์เอง */
+        .typing-container {
+            min-height: 150px;
+            overflow: hidden;
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 15px;
+            line-height: 1.8;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .typing-container strong {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .signature {
+            margin-top: 30px;
+            text-align: right;
+            font-family: var(--font-serif);
+            font-size: 1.2em;
+            color: var(--primary-color);
+            width: 100%;
+        }
+
+        /* ปุ่มเปิดผนึก */
+        #open-button {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 5px 15px rgba(144, 12, 63, 0.4);
+        }
+        
+        #open-button:hover {
+            background-color: #b70f53;
+            transform: translateX(-50%) scale(1.05);
+        }
+        
+        .flipped #open-button {
+            background-color: #0c142c;
+            color: var(--secondary-color);
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="heart-icon">❤️</div>
-        <h1 class="main-message">ถึง [ชื่อคนที่คุณรัก]</h1>
-        <p class="love-text">
-            ตั้งแต่วันแรกที่ได้รู้จักกัน โลกของฉันก็เปลี่ยนไป<br>
-            คุณคือแสงสว่าง ความสุข และเหตุผลที่ฉันยิ้มได้ทุกวัน
-        </p>
 
-        <button id="surprise-button" onclick="showSecretMessage()">
-            คลิกที่นี่เพื่อรับข้อความพิเศษ!
+    <div class="love-card-wrapper" id="card-wrapper">
+        <div class="love-card">
+            
+            <div class="card-face card-front">
+                <div class="seal">✉️</div>
+                <h2>An Eternal Letter</h2>
+                <p style="font-style: italic; color: #666;">
+                    ถึง **[ชื่อคนที่คุณรัก]**<br>
+                    มีข้อความสำคัญรอคุณอยู่ โปรดเปิดผนึก...
+                </p>
+            </div>
+            
+            <div class="card-face card-back">
+                <h3>จากฉัน ถึงคุณ</h3>
+                
+                <div id="typing-text" class="typing-container">
+                    </div>
+
+                <div class="signature">
+                    รักเสมอ<br>
+                    **[ชื่อของคุณ]**
+                </div>
+            </div>
+            
+        </div>
+        
+        <button id="open-button" onclick="flipCard()">
+            เปิดผนึกจดหมาย
         </button>
-
-        <div id="secret-message" class="hidden">
-            <p>
-                และอีกสิ่งหนึ่งที่ฉันอยากจะบอก...<br>
-                **คุณคือคนที่ใช่สำหรับฉันตลอดไป**<br>
-                ขอบคุณที่เข้ามาในชีวิตนะ! 💖
-            </p>
-        </div>
-
-        <div class="signature">
-            ด้วยรักเสมอ<br>
-            จาก [ชื่อของคุณ]
-        </div>
     </div>
 
     <script>
-        function showSecretMessage() {
-            const secretDiv = document.getElementById('secret-message');
-            const button = document.getElementById('surprise-button');
+        const message = 
+            "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
+            "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
+            "ฉันอยากจะมอบทุกอย่างที่มีให้คุณ และเดินเคียงข้างคุณตลอดไป " +
+            "**ฉันรักคุณที่สุดในจักรวาลนี้**";
+        
+        let i = 0;
+        const speed = 50; // ความเร็วในการพิมพ์ (มิลลิวินาทีต่อตัวอักษร)
+        const typingElement = document.getElementById("typing-text");
 
-            // 1. แสดงข้อความลับ
-            secretDiv.classList.remove('hidden');
+        // ฟังก์ชันสำหรับพิมพ์ข้อความทีละตัวอักษร
+        function typeWriter() {
+            if (i < message.length) {
+                let char = message.charAt(i);
+                
+                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
+                if (char === '*' && message.substring(i, i + 2) === '**') {
+                    // เปิดแท็ก strong 
+                    typingElement.innerHTML += '<strong>';
+                    i += 2; 
+                    char = message.charAt(i);
+                    // พิมพ์ข้อความใน strong
+                    while (i < message.length && message.substring(i, i + 2) !== '**') {
+                         typingElement.innerHTML += message.charAt(i);
+                         i++;
+                    }
+                    // ปิดแท็ก strong
+                    if (message.substring(i, i + 2) === '**') {
+                        typingElement.innerHTML += '</strong>';
+                        i += 2;
+                    }
+                } else {
+                    // พิมพ์ตัวอักษรปกติ
+                    typingElement.innerHTML += char;
+                    i++;
+                }
 
-            // 2. ซ่อนปุ่ม (เพื่อให้ดูเรียบร้อย)
-            button.style.display = 'none';
+                setTimeout(typeWriter, speed);
+            }
+        }
+        
+        // ฟังก์ชันสำหรับพลิกการ์ดเมื่อกดปุ่ม
+        function flipCard() {
+            const wrapper = document.getElementById('card-wrapper');
+            const button = document.getElementById('open-button');
+            
+            // 1. สลับคลาสเพื่อพลิกการ์ด
+            wrapper.classList.toggle('flipped'); 
 
-            // 3. (เลือกได้) ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น
-            setTimeout(() => {
-                secretDiv.style.opacity = '1';
-                secretDiv.style.transform = 'translateY(0)';
-            }, 10);
+            // 2. เมื่อการ์ดพลิกไปด้านหลัง
+            if (wrapper.classList.contains('flipped')) {
+                // เปลี่ยนข้อความปุ่ม
+                button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
+                
+                // เริ่มพิมพ์ข้อความหลังจากพลิกไปแล้ว 1.2 วินาที (เท่ากับแอนิเมชั่น)
+                setTimeout(typeWriter, 1200); 
+            } else {
+                // พลิกกลับไปด้านหน้า (ถ้ามี)
+                button.textContent = 'เปิดผนึกจดหมาย';
+            }
         }
     </script>
 </body>
