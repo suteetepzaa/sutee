@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💌 จดหมายรักพาสเทล</title>
+    <title>💌 จดหมายรักที่ดีที่สุด</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
@@ -24,6 +24,7 @@
 
         body {
             font-family: var(--font-sans);
+            /* พื้นหลัง Gradient เคลื่อนไหว โทนพาสเทล */
             background: linear-gradient(-45deg, var(--pastel-blue), var(--pastel-pink), var(--pastel-purple), var(--pastel-yellow));
             background-size: 400% 400%;
             animation: gradientBackground 15s ease infinite; 
@@ -38,7 +39,6 @@
             position: relative;
         }
 
-        /* Keyframes สำหรับพื้นหลัง Gradient */
         @keyframes gradientBackground {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -46,7 +46,7 @@
         }
 
         /* ------------------------------------- */
-        /* Floating Hearts Background (โทนพาสเทล ลอยขึ้น) */
+        /* Floating Hearts Background */
         /* ------------------------------------- */
         .floating-heart {
             position: absolute;
@@ -81,6 +81,7 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+            /* Transition 1 วินาที (สมูทและรวดเร็ว) */
             transition: transform 1s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
             border-radius: 15px;
         }
@@ -142,23 +143,22 @@
             text-align: left;
             justify-content: flex-start;
             padding-top: 50px;
-            position: relative; /* สำคัญสำหรับจัดตำแหน่งรูปภาพ */
+            position: relative; 
         }
 
-        /* *** รูปภาพขนาดเล็กด้านหลังจดหมาย: จัดวางใหม่ *** */
+        /* *** รูปภาพขนาดเล็กด้านหลังจดหมาย: จัดวางสมดุล *** */
         .card-back .small-image {
             position: absolute;
-            /* ย้ายไปอยู่กลางด้านล่างมากขึ้น */
             bottom: 25px; 
-            left: 50%; /* จัดกึ่งกลางแนวนอน */
-            transform: translateX(-50%); /* ดึงกลับครึ่งหนึ่งของความกว้างรูป */
+            left: 50%; 
+            transform: translateX(-50%); 
             
-            width: 90px; /* เพิ่มขนาดเล็กน้อย */
+            width: 90px; 
             height: 90px;
             border-radius: 50%; 
             object-fit: cover; 
-            border: 4px solid var(--primary-color); /* เพิ่มขนาดกรอบ */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* เพิ่มเงาให้ดูมีมิติ */
+            border: 4px solid var(--primary-color); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); 
             z-index: 2; 
         }
         
@@ -172,7 +172,7 @@
             font-size: 1.1em;
             font-weight: 300;
             color: var(--text-color); 
-            /* เพิ่ม padding ด้านล่าง เพื่อไม่ให้รูปทับข้อความ */
+            /* เว้นพื้นที่ให้รูปภาพ */
             margin-bottom: 120px; 
         }
 
@@ -316,10 +316,10 @@
             }
         }
 
-        // *** 3. Floating Hearts JavaScript (Pastel Tone, Float Up) ***
+        // *** 3. Floating Hearts JavaScript ***
         const heartCount = 40; 
         const heartsContainer = document.body;
-        const pastelHeartColors = ['#FFC0CB', '#FFB6C1', '#FF69B4', '#F08080', '#E6E6FA', '#ADD8E6', '#90EE90']; // เพิ่มสีฟ้าและเขียวพาสเทล
+        const pastelHeartColors = ['#FFC0CB', '#FFB6C1', '#FF69B4', '#F08080', '#E6E6FA', '#ADD8E6', '#90EE90'];
 
         function createHeart() {
             const heart = document.createElement('span');
