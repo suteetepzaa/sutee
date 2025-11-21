@@ -11,9 +11,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
         
         :root {
-            --primary-color: #900C3F; 
-            --secondary-color: #FFC300;
-            --bg-color: #fcfcfc;
+            --primary-color: #900C3F; /* Burgundy/Deep Red */
+            --secondary-color: #FFC300; /* Gold Accent */
+            --bg-color: #fcfcfc; /* Near White */
             --text-color: #333;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Sarabun', sans-serif;
@@ -21,7 +21,7 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: #0c142c; 
+            background-color: #0c142c; /* Midnight Blue Background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,11 +29,11 @@
             margin: 0;
             perspective: 1500px;
             overflow: hidden;
-            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); 
+            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%);
         }
 
         /* ------------------------------------- */
-        /* Card Styles (Same as before) */
+        /* Card Styles */
         /* ------------------------------------- */
         .love-card-wrapper {
             width: 380px;
@@ -165,7 +165,7 @@
         /* ------------------------------------- */
         #music-button-container {
             position: absolute;
-            top: 20px; /* วางไว้ด้านบนขวาของการ์ด */
+            top: 20px; 
             right: 20px;
             z-index: 30;
         }
@@ -234,26 +234,24 @@
     </div>
 
     <script>
-        // *** 1. ข้อมูลเพลง: เปลี่ยน YOUR_YOUTUBE_VIDEO_ID เป็น ID เพลงที่คุณต้องการ ***
-        // ตัวอย่าง: ถ้า URL คือ https://www.youtube.com/watch?v=dQw4w9WgXcQ 
-        // ID คือ dQw4w9WgXcQ
-        const YOUTUBE_VIDEO_ID = "gC3q4Oq6w7w"; // ตัวอย่าง: เพลงบรรเลงโรแมนติก
+        // *** 1. ข้อมูลเพลง: Canon in D - Pachelbel ***
+        const YOUTUBE_VIDEO_ID = "4u-rW-7lVbE"; // ID เพลง Canon in D
         let player;
         let isPlaying = false;
 
-        // ฟังก์ชันเมื่อ API พร้อมใช้งาน
+        // ฟังก์ชันเมื่อ YouTube API พร้อมใช้งาน
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
                 height: '0', 
                 width: '0',
                 videoId: YOUTUBE_VIDEO_ID,
                 playerVars: {
-                    'autoplay': 0, // ปิดการเล่นอัตโนมัติเบื้องต้น
-                    'controls': 0, // ซ่อนตัวควบคุม
+                    'autoplay': 0, 
+                    'controls': 0, 
                     'rel': 0, 
-                    'loop': 1, // เล่นวนซ้ำ
+                    'loop': 1, 
                     'modestbranding': 1,
-                    'playlist': YOUTUBE_VIDEO_ID // ต้องระบุ playlist ID สำหรับ loop
+                    'playlist': YOUTUBE_VIDEO_ID 
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -266,21 +264,19 @@
             // Player พร้อมแล้ว
         }
 
+        // ฟังก์ชันอัปเดตสถานะปุ่มเพลง
         function onPlayerStateChange(event) {
             const musicButton = document.getElementById('music-button');
-            const icon = document.getElementById('music-icon');
             if (event.data === YT.PlayerState.PLAYING) {
                 isPlaying = true;
                 musicButton.innerHTML = '🎶 หยุดเพลง';
-                icon.textContent = '🎶';
-            } else {
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
                 musicButton.innerHTML = '🎵 เปิดเพลง';
-                icon.textContent = '🎵';
             }
         }
 
-        // ฟังก์ชันสำหรับสลับการเล่น/หยุดเพลง
+        // ฟังก์ชันสำหรับสลับการเล่น/หยุดเพลงด้วยตนเอง
         function toggleMusic() {
             if (player && isPlaying) {
                 player.pauseVideo();
@@ -289,7 +285,7 @@
             }
         }
 
-        // *** 2. Typing Effect (Same as before) ***
+        // *** 2. Typing Effect ***
         const message = 
             "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
             "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
@@ -299,8 +295,10 @@
         let i = 0;
         const speed = 50;
         const typingElement = document.getElementById("typing-text");
+        let typingStarted = false;
 
         function typeWriter() {
+            typingStarted = true;
             if (i < message.length) {
                 let char = message.charAt(i);
                 
@@ -325,7 +323,7 @@
             }
         }
         
-        // *** 3. Flip Card Function (Update) ***
+        // *** 3. Flip Card Function ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
@@ -333,7 +331,7 @@
             wrapper.classList.toggle('flipped'); 
 
             if (wrapper.classList.contains('flipped')) {
-                // *** เมื่อพลิกการ์ด: เล่นเพลงอัตโนมัติ ***
+                // เมื่อพลิกการ์ด: เล่นเพลงอัตโนมัติ
                 if (player) {
                     player.playVideo();
                 }
@@ -342,9 +340,12 @@
                 button.style.backgroundColor = '#0c142c';
                 button.style.color = 'var(--secondary-color)';
                 
-                setTimeout(typeWriter, 1200); 
+                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดแล้ว 1.2 วินาที และยังไม่เคยพิมพ์มาก่อน
+                if (!typingStarted) {
+                    setTimeout(typeWriter, 1200); 
+                }
             } else {
-                // *** เมื่อพลิกกลับ: หยุดเพลง ***
+                // เมื่อพลิกกลับ: หยุดเพลง
                 if (player) {
                     player.pauseVideo();
                 }
