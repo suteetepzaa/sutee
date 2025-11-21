@@ -11,9 +11,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
         
         :root {
-            --primary-color: #900C3F; /* Burgundy/Deep Red */
-            --secondary-color: #FFC300; /* Gold Accent */
-            --bg-color: #fcfcfc; /* Near White */
+            --primary-color: #900C3F; 
+            --secondary-color: #FFC300; 
+            --bg-color: #fcfcfc; 
             --text-color: #333;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Sarabun', sans-serif;
@@ -21,7 +21,7 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: #0c142c; /* Midnight Blue Background */
+            background-color: #0c142c; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -238,6 +238,7 @@
         const YOUTUBE_VIDEO_ID = "4u-rW-7lVbE"; // ID เพลง Canon in D
         let player;
         let isPlaying = false;
+        let playerReady = false;
 
         // ฟังก์ชันเมื่อ YouTube API พร้อมใช้งาน
         function onYouTubeIframeAPIReady() {
@@ -261,7 +262,7 @@
         }
         
         function onPlayerReady(event) {
-            // Player พร้อมแล้ว
+            playerReady = true;
         }
 
         // ฟังก์ชันอัปเดตสถานะปุ่มเพลง
@@ -323,24 +324,26 @@
             }
         }
         
-        // *** 3. Flip Card Function ***
+        // *** 3. Flip Card Function (FIXED) ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
             
+            // 1. สั่งเล่นเพลงทันทีที่คลิก (แก้ไขปัญหา Autoplay Policy)
+            if (playerReady && !isPlaying) {
+                player.playVideo();
+            }
+
+            // 2. พลิกการ์ด
             wrapper.classList.toggle('flipped'); 
 
             if (wrapper.classList.contains('flipped')) {
-                // เมื่อพลิกการ์ด: เล่นเพลงอัตโนมัติ
-                if (player) {
-                    player.playVideo();
-                }
-
+                // อัปเดต UI ปุ่ม
                 button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
                 button.style.backgroundColor = '#0c142c';
                 button.style.color = 'var(--secondary-color)';
                 
-                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดแล้ว 1.2 วินาที และยังไม่เคยพิมพ์มาก่อน
+                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดแล้ว 1.2 วินาที
                 if (!typingStarted) {
                     setTimeout(typeWriter, 1200); 
                 }
