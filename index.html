@@ -3,99 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💌 ข้อความจากใจ</title>
+    <title>🧸 ข้อความสุดที่รัก</title>
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap'); /* ใช้ฟอนต์น่ารักๆ */
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f7f3f9; /* พื้นหลังสีม่วงอ่อน/ชมพูอ่อน */
+            font-family: 'Mali', cursive; /* ฟอนต์ลายมือน่ารัก */
+            background-color: #ffeef2; /* พื้นหลังสีชมพูพาสเทล */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            overflow: hidden; /* ซ่อนหัวใจที่ล้นออกไปนอกจอ */
         }
 
         .container {
             background-color: #ffffff;
-            padding: 40px 60px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2); /* เงาสีชมพูอ่อน */
             text-align: center;
-            max-width: 500px;
-            animation: fadeIn 2s ease-in-out;
+            max-width: 450px;
+            animation: bounceIn 1s ease-out; /* แอนิเมชั่นเด้งเข้า */
+            position: relative;
+            z-index: 10; /* ให้อยู่เหนือหัวใจที่โปรยลงมา */
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .heart-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: beat 1.5s infinite alternate; /* แอนิเมชั่นหัวใจเต้น */
+        .emoji-header {
+            font-size: 50px;
+            margin-bottom: 10px;
+            animation: wiggle 2s infinite; /* แอนิเมชั่นส่ายไปมา */
         }
-
-        @keyframes beat {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+        
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
         }
 
         .main-message {
-            color: #e91e63; /* สีชมพูแดง */
-            font-size: 2.2em;
-            margin-bottom: 15px;
+            color: #ff69b4; /* สี Hot Pink */
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px #fff;
         }
 
         .love-text {
-            color: #4a4a4a;
+            color: #6a5acd; /* สี Lavender */
             font-size: 1.1em;
             line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .signature {
-            margin-top: 30px;
-            color: #888;
-            font-style: italic;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-            font-size: 0.9em;
-        }
-
-        /* สไตล์สำหรับปุ่ม */
-        #surprise-button {
-            background-color: #ff69b4; /* Hot Pink */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            border-radius: 5px;
-            cursor: pointer;
             margin-bottom: 25px;
-            transition: background-color 0.3s ease;
+        }
+
+        .love-text strong {
+            color: #ff007a;
+            font-weight: 700;
+        }
+
+        /* ปุ่มน่ารัก */
+        #surprise-button {
+            background-color: #ffb6c1; /* Light Pink */
+            color: #8b0000; /* Dark Red Text */
+            border: 3px solid #ff69b4;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
 
         #surprise-button:hover {
-            background-color: #ff479e;
-            transform: scale(1.05);
+            background-color: #ff8fab;
+            transform: scale(1.1) rotate(2deg);
         }
 
-        /* สไตล์สำหรับข้อความลับที่ซ่อนอยู่ */
+        /* ข้อความลับ (ซ่อน/แสดง) */
         #secret-message {
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 15px;
-            border: 2px solid #ff69b4;
-            border-radius: 10px;
-            background-color: #fff0f5; /* Light Pink Background */
-            color: #e91e63;
+            border: 2px dashed #ffb6c1;
+            border-radius: 15px;
+            background-color: #f0f8ff; /* Alice Blue */
+            color: #4682b4; /* Steel Blue */
             font-style: italic;
             
-            /* สไตล์สำหรับการแสดงผลแบบมีแอนิเมชั่น (เริ่มต้นจะซ่อนอยู่) */
+            /* แอนิเมชั่นซ่อน/แสดง */
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: scale(0.8);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         #secret-message p {
@@ -103,45 +108,82 @@
             line-height: 1.4;
         }
 
-        #secret-message strong {
-            font-size: 1.1em;
+        .signature {
+            margin-top: 25px;
+            color: #a9a9a9;
+            font-style: italic;
+            padding-top: 10px;
+            font-size: 0.9em;
         }
 
-        /* คลาสสำหรับซ่อนข้อความเริ่มต้น */
-        .hidden {
-            opacity: 0; 
-            height: 0; 
-            overflow: hidden;
-            padding: 0;
-            border: none;
-            transition: none; 
+        /* ------------------------------------- */
+        /* แอนิเมชั่นหัวใจโปรยลงมา (Falling Hearts) */
+        /* ------------------------------------- */
+
+        .heart {
+            position: absolute;
+            top: -10vh;
+            color: #ffc0cb; /* Pink */
+            font-size: 1.5em;
+            z-index: 1; /* ให้อยู่ด้านหลังข้อความ */
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.5;
+            }
         }
     </style>
 </head>
 <body>
+    
+    <script>
+        // ฟังก์ชันสร้างหัวใจที่โปรยลงมา
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '💖'; 
+            heart.style.left = Math.random() * 100 + 'vw'; 
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's'; // 4s - 7s
+            heart.style.opacity = Math.random() * 0.5 + 0.3; // ความทึบแสง
+            
+            document.body.appendChild(heart);
+            
+            // ลบหัวใจออกเมื่อพ้นจอเพื่อไม่ให้โค้ดหนักเกินไป
+            setTimeout(() => {
+                heart.remove();
+            }, 7000); 
+        }
+
+        // สร้างหัวใจใหม่ทุก 300 มิลลิวินาที
+        setInterval(createHeart, 300); 
+    </script>
+    
     <div class="container">
-        <div class="heart-icon">❤️</div>
-        <h1 class="main-message">ถึง **[ชื่อคนที่คุณรัก]**</h1>
+        <div class="emoji-header">🐻💕</div>
+        <h1 class="main-message">ถึง **[คนดีของฉัน]**</h1>
         <p class="love-text">
-            ตั้งแต่วันแรกที่ได้รู้จักกัน โลกของฉันก็เปลี่ยนไป<br>
-            คุณคือแสงสว่าง ความสุข และเหตุผลที่ฉันยิ้มได้ทุกวัน
+            อยากบอกว่า... ตั้งแต่มีคุณ โลกของฉันก็เหมือนมีสายรุ้ง<br>
+            คุณทำให้ทุกวันเป็นวันที่สดใสและอบอุ่น<br>
+            **รักคุณมากๆ เลยนะ จุ๊บๆ!**
         </p>
 
         <button id="surprise-button" onclick="showSecretMessage()">
-            คลิกที่นี่เพื่อรับข้อความพิเศษ!
+            เปิดกล่องความลับ ❤️
         </button>
 
         <div id="secret-message" class="hidden">
             <p>
-                และอีกสิ่งหนึ่งที่ฉันอยากจะบอก...<br>
-                **คุณคือคนที่ใช่สำหรับฉันตลอดไป**<br>
-                ขอบคุณที่เข้ามาในชีวิตนะ! 💖
+                ฉันจะอยู่เคียงข้างคุณเสมอ<br>
+                ไม่ว่าจะเจออะไรก็ตาม คุณคือของขวัญที่ดีที่สุดในชีวิตฉันเลย! 🎁
             </p>
         </div>
 
         <div class="signature">
-            ด้วยรักเสมอ<br>
-            จาก **[ชื่อของคุณ]**
+            ส่งมาจาก<br>
+            **[ชื่อของคุณ]**
         </div>
     </div>
 
@@ -156,10 +198,10 @@
             // 2. ซ่อนปุ่ม
             button.style.display = 'none';
 
-            // 3. ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น (ต้องรอเล็กน้อยเพื่อให้ DOM อัปเดต)
+            // 3. ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น
             setTimeout(() => {
                 secretDiv.style.opacity = '1';
-                secretDiv.style.transform = 'translateY(0)';
+                secretDiv.style.transform = 'scale(1)';
             }, 10);
         }
     </script>
