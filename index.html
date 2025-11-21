@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🕯️ จดหมายเปิดผนึก</title>
+    <title>💌 จดหมายรักจากใจ</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
@@ -19,25 +19,36 @@
 
         body {
             font-family: var(--font-sans);
-            /* *** เปลี่ยนพื้นหลังเป็นเคลื่อนไหวด้วย CSS Gradient Animation *** */
-            background: linear-gradient(-45deg, #1e3a8a, #0c142c, #4a0031, #2d001b);
-            background-size: 400% 400%;
-            animation: gradientBackground 15s ease infinite; /* แอนิเมชั่น 15s */
-            
+            background-color: #1a0024; /* Darker background for contrast with hearts */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             perspective: 1800px;
-            overflow: hidden;
+            overflow: hidden; /* Hide overflowing hearts initially */
+            position: relative;
         }
 
-        /* *** Keyframes สำหรับพื้นหลังเคลื่อนไหว *** */
-        @keyframes gradientBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* ------------------------------------- */
+        /* Falling Hearts Background */
+        /* ------------------------------------- */
+        .falling-heart {
+            position: absolute;
+            color: #ff69b4; /* Pink heart color */
+            font-size: 1.5em; /* Adjust heart size */
+            animation: fall linear infinite;
+            pointer-events: none; /* Allow clicks to pass through hearts */
+            opacity: 0; /* Hidden by default, shown by JS */
+            text-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+            z-index: 1; /* Hearts behind the card */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) scale(1.2); opacity: 0; }
         }
 
         /* ------------------------------------- */
@@ -47,22 +58,19 @@
             width: 380px;
             height: 500px;
             position: relative;
-            z-index: 10;
+            z-index: 10; /* Card is above hearts */
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            transition: transform 0.8s ease-in-out;
         }
 
         .love-card {
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            /* *** ปรับเวลา transition ให้เร็วขึ้น (จาก 1.5s -> 1s) *** */
             transition: transform 1s cubic-bezier(0.55, 0.085, 0.68, 0.53); 
             border-radius: 10px;
         }
         
-        /* สั่งพลิกการ์ดเมื่อคลาส 'flipped' ถูกเพิ่ม */
         .flipped .love-card {
             transform: rotateY(180deg);
         }
@@ -96,6 +104,10 @@
             margin-top: 20px;
         }
         
+        .card-front p {
+            text-align: center;
+        }
+
         .card-front .seal {
             font-size: 70px;
             color: var(--secondary-color);
@@ -107,7 +119,7 @@
             to { opacity: 1; transform: scale(1.05); }
         }
 
-        /* ด้านหลังของการ์ด (เนื้อจดหมาย) */
+        /* ด้านหลังของการ์ด (เนื้อจดหมาย) - มีรูปพื้นหลัง */
         .card-back {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -115,17 +127,39 @@
             text-align: left;
             justify-content: flex-start;
             padding-top: 50px;
-        }
-        
-        .card-back h3 {
-            font-family: var(--font-serif);
-            font-size: 1.8em;
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 25px;
+            
+            /* *** เพิ่มรูปภาพพื้นหลังตรงนี้ *** */
+            background-image: url('https://images.unsplash.com/photo-1540307525203-aa94e50ae808?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8bG92ZXx8fHx8fDE3MDkwMjYxNjg&ixlib=rb-4.0.3&q=80&w=1080'); 
+            background-size: cover; /* คลุมพื้นที่ทั้งหมด */
+            background-position: center; /* จัดตำแหน่งกึ่งกลาง */
+            background-repeat: no-repeat; /* ไม่ต้องทำซ้ำ */
+            position: relative; /* เพื่อให้ overlay ทำงานได้ */
+            color: white; /* เปลี่ยนสีตัวอักษรให้ตัดกับรูป */
         }
 
-        /* สไตล์สำหรับข้อความที่พิมพ์เอง */
+        /* Overlay สำหรับรูปภาพพื้นหลัง เพื่อให้อ่านข้อความได้ง่ายขึ้น */
+        .card-back::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* สีดำโปร่งแสง 40% */
+            border-radius: 10px;
+            z-index: 1;
+        }
+        
+        /* เนื้อหาใน card-back ให้อยู่เหนือ overlay */
+        .card-back h3, .card-back .typing-container, .card-back .signature {
+            position: relative;
+            z-index: 2; 
+        }
+
+        .card-back h3 {
+            color: var(--secondary-color); /* ให้สีตัดกับพื้นหลังรูป */
+        }
+        
         .typing-container {
             min-height: 150px;
             overflow: hidden;
@@ -134,10 +168,11 @@
             line-height: 1.8;
             font-size: 1.1em;
             font-weight: 300;
+            color: white; /* ข้อความสีขาว */
         }
 
         .typing-container strong {
-            color: var(--primary-color);
+            color: var(--secondary-color); /* Bold text in gold */
             font-weight: 600;
         }
 
@@ -146,7 +181,7 @@
             text-align: right;
             font-family: var(--font-serif);
             font-size: 1.2em;
-            color: var(--primary-color);
+            color: var(--secondary-color); /* Signature in gold */
             width: 100%;
         }
 
@@ -174,8 +209,8 @@
         }
         
         .flipped #open-button {
-            background-color: #0c142c;
-            color: var(--secondary-color);
+            background-color: var(--secondary-color); /* ปุ่มเปลี่ยนสีเมื่อเปิดแล้ว */
+            color: var(--primary-color);
         }
     </style>
 </head>
@@ -251,7 +286,7 @@
             }
         }
         
-        // *** 2. Flip Card Function (ปรับเวลาการพลิก) ***
+        // *** 2. Flip Card Function ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
@@ -260,10 +295,9 @@
 
             if (wrapper.classList.contains('flipped')) {
                 button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
-                button.style.backgroundColor = '#0c142c';
-                button.style.color = 'var(--secondary-color)';
+                button.style.backgroundColor = 'var(--secondary-color)'; /* ปุ่มเปลี่ยนสี */
+                button.style.color = 'var(--primary-color)';
                 
-                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดเสร็จ (1 วินาที เพราะ transition = 1s)
                 if (!typingStarted) {
                     setTimeout(typeWriter, 1000); 
                 }
@@ -273,6 +307,37 @@
                 button.style.color = 'white';
             }
         }
+
+        // *** 3. Falling Hearts JavaScript ***
+        const heartCount = 30; // จำนวนหัวใจที่ต้องการ
+        const heartsContainer = document.body;
+
+        function createHeart() {
+            const heart = document.createElement('span');
+            heart.classList.add('falling-heart');
+            heart.innerHTML = '💖'; // Heart emoji
+            
+            // Random position, size, and animation duration
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 8 + 7 + 's'; // 7-15 seconds
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = Math.random() * 1 + 1 + 'em'; // 1em - 2em
+            
+            heartsContainer.appendChild(heart);
+            
+            // Remove heart after animation ends to prevent accumulation
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        // Create initial hearts
+        for (let j = 0; j < heartCount; j++) {
+            createHeart();
+        }
+
+        // Continuously create new hearts every few seconds
+        setInterval(createHeart, 500); // New heart every 0.5 second
     </script>
 </body>
 </html>
