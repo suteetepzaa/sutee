@@ -3,168 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💌 ข้อความวิ่งจากใจ</title>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap'); 
-        
-        :root {
-            --main-color: #FF69B4; /* Pastel Pink - สีหลัก */
-            --bg-color: #F8F8FF; /* Ghost White - สีพื้นหลังอ่อนๆ */
-            --text-color: #4a4a4a; /* Dark Gray - สีข้อความ */
-        }
-
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: var(--bg-color); /* พื้นหลังสีเดียว */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden; /* ป้องกันการเลื่อนที่ไม่จำเป็น */
-        }
-
-        /* ------------------------------------- */
-        /* ข้อความวิ่ง (Marquee) */
-        /* ------------------------------------- */
-        .running-message {
-            font-size: 1.5em;
-            color: var(--main-color);
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 100%;
-            padding: 10px 0;
-            margin-bottom: 30px;
-            border-top: 2px solid var(--main-color);
-            border-bottom: 2px solid var(--main-color);
-        }
-
-        /* ------------------------------------- */
-        /* กล่องข้อความหลัก */
-        /* ------------------------------------- */
-        .container {
-            background-color: #ffffff;
-            padding: 40px 60px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 550px;
-            animation: fadeIn 2s ease-in-out;
-            opacity: 0; /* ซ่อนไว้ก่อน Typing Effect จะเริ่ม */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* สไตล์สำหรับข้อความที่พิมพ์เอง */
-        .typing-container {
-            min-height: 120px;
-            text-align: left;
-            padding: 10px;
-            line-height: 1.8;
-            font-size: 1.1em;
-            color: var(--text-color);
-        }
-
-        .typing-container strong {
-            color: var(--main-color);
-            font-weight: 700;
-        }
-
-        .signature {
-            margin-top: 20px;
-            color: var(--main-color);
-            font-style: italic;
-            text-align: right;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-            font-size: 0.9em;
-        }
-    </style>
+    <title>💌 ข้อความจากใจ</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <div class="heart-icon">❤️</div>
+        <h1 class="main-message">ถึง [ชื่อคนที่คุณรัก]</h1>
+        <p class="love-text">
+            ตั้งแต่วันแรกที่ได้รู้จักกัน โลกของฉันก็เปลี่ยนไป<br>
+            คุณคือแสงสว่าง ความสุข และเหตุผลที่ฉันยิ้มได้ทุกวัน
+        </p>
 
-    <marquee class="running-message" behavior="scroll" direction="right" scrollamount="10" id="intro-marquee">
-        💖 ข้อความนี้ถูกสร้างขึ้นเพื่อคุณโดยเฉพาะ 💖 **[ชื่อคนที่คุณรัก]** คุณคือคนสำคัญของฉัน 💖
-    </marquee>
+        <button id="surprise-button" onclick="showSecretMessage()">
+            คลิกที่นี่เพื่อรับข้อความพิเศษ!
+        </button>
 
-    <div class="container" id="main-content">
-        <h1 style="color: var(--main-color);">สารจากใจ</h1>
-        
-        <div id="typing-text" class="typing-container">
-            </div>
+        <div id="secret-message" class="hidden">
+            <p>
+                และอีกสิ่งหนึ่งที่ฉันอยากจะบอก...<br>
+                **คุณคือคนที่ใช่สำหรับฉันตลอดไป**<br>
+                ขอบคุณที่เข้ามาในชีวิตนะ! 💖
+            </p>
+        </div>
 
         <div class="signature">
-            ด้วยรักที่สุด<br>
-            จาก **[ชื่อของคุณ]**
+            ด้วยรักเสมอ<br>
+            จาก [ชื่อของคุณ]
         </div>
     </div>
 
     <script>
-        // *** 1. Typing Effect Code ***
-        const message = 
-            "สวัสดีครับ/ค่ะ **[ชื่อคนที่คุณรัก]**! " +
-            "คุณคงเห็นข้อความวิ่งข้างบนแล้วใช่ไหม? " +
-            "นี่คือสิ่งที่ฉันอยากบอกคุณจริงๆ: " +
-            "คุณคือความสุขของฉันในทุกๆ วัน และฉันโชคดีที่มีคุณอยู่ในชีวิต " +
-            "**ขอบคุณที่อยู่เคียงข้างกันเสมอมา ฉันรักคุณ!**";
-        
-        let i = 0;
-        const speed = 50; 
-        const typingElement = document.getElementById("typing-text");
-        const mainContent = document.getElementById("main-content");
+        function showSecretMessage() {
+            const secretDiv = document.getElementById('secret-message');
+            const button = document.getElementById('surprise-button');
 
-        function typeWriter() {
-            if (i < message.length) {
-                let char = message.charAt(i);
-                
-                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
-                if (char === '*' && message.substring(i, i + 2) === '**') {
-                    typingElement.innerHTML += '<strong>';
-                    i += 2; 
-                    char = message.charAt(i);
-                    while (i < message.length && message.substring(i, i + 2) !== '**') {
-                         typingElement.innerHTML += message.charAt(i);
-                         i++;
-                    }
-                    if (message.substring(i, i + 2) === '**') {
-                        typingElement.innerHTML += '</strong>';
-                        i += 2;
-                    }
-                } else {
-                    typingElement.innerHTML += char;
-                    i++;
-                }
+            // 1. แสดงข้อความลับ
+            secretDiv.classList.remove('hidden');
 
-                setTimeout(typeWriter, speed);
-            }
-        }
-        
-        // 2. ควบคุมการแสดงผลตามข้อความวิ่ง
-        window.onload = function() {
-            const marquee = document.getElementById('intro-marquee');
-            
-            // ประมาณเวลาที่ข้อความวิ่งจะเสร็จสิ้น (ขึ้นอยู่กับความยาวข้อความและ scrollamount)
-            // ตัวอย่าง: ความยาวข้อความ * ความเร็ว (100ms) + เวลาเริ่มต้น (2s)
-            const estimatedTime = 7000; // 7 วินาที
-            
+            // 2. ซ่อนปุ่ม (เพื่อให้ดูเรียบร้อย)
+            button.style.display = 'none';
+
+            // 3. (เลือกได้) ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น
             setTimeout(() => {
-                // ซ่อนข้อความวิ่ง
-                marquee.style.display = 'none';
-                
-                // แสดงกล่องข้อความหลักด้วยแอนิเมชั่น fadeIn
-                mainContent.style.opacity = '1';
-                
-                // เริ่มพิมพ์ข้อความ
-                typeWriter();
-                
-            }, estimatedTime);
-        };
+                secretDiv.style.opacity = '1';
+                secretDiv.style.transform = 'translateY(0)';
+            }, 10);
+        }
     </script>
 </body>
 </html>
