@@ -4,12 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💌 ข้อความจากใจ</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f3f9; /* พื้นหลังสีม่วงอ่อน/ชมพูอ่อน */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .heart-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: beat 1.5s infinite alternate; /* แอนิเมชั่นหัวใจเต้น */
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .main-message {
+            color: #e91e63; /* สีชมพูแดง */
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .love-text {
+            color: #4a4a4a;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .signature {
+            margin-top: 30px;
+            color: #888;
+            font-style: italic;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            font-size: 0.9em;
+        }
+
+        /* สไตล์สำหรับปุ่ม */
+        #surprise-button {
+            background-color: #ff69b4; /* Hot Pink */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        #surprise-button:hover {
+            background-color: #ff479e;
+            transform: scale(1.05);
+        }
+
+        /* สไตล์สำหรับข้อความลับที่ซ่อนอยู่ */
+        #secret-message {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            background-color: #fff0f5; /* Light Pink Background */
+            color: #e91e63;
+            font-style: italic;
+            
+            /* สไตล์สำหรับการแสดงผลแบบมีแอนิเมชั่น (เริ่มต้นจะซ่อนอยู่) */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        #secret-message p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        #secret-message strong {
+            font-size: 1.1em;
+        }
+
+        /* คลาสสำหรับซ่อนข้อความเริ่มต้น */
+        .hidden {
+            opacity: 0; 
+            height: 0; 
+            overflow: hidden;
+            padding: 0;
+            border: none;
+            transition: none; 
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="heart-icon">❤️</div>
-        <h1 class="main-message">ถึง [ชื่อคนที่คุณรัก]</h1>
+        <h1 class="main-message">ถึง **[ชื่อคนที่คุณรัก]**</h1>
         <p class="love-text">
             ตั้งแต่วันแรกที่ได้รู้จักกัน โลกของฉันก็เปลี่ยนไป<br>
             คุณคือแสงสว่าง ความสุข และเหตุผลที่ฉันยิ้มได้ทุกวัน
@@ -29,7 +141,7 @@
 
         <div class="signature">
             ด้วยรักเสมอ<br>
-            จาก [ชื่อของคุณ]
+            จาก **[ชื่อของคุณ]**
         </div>
     </div>
 
@@ -38,13 +150,13 @@
             const secretDiv = document.getElementById('secret-message');
             const button = document.getElementById('surprise-button');
 
-            // 1. แสดงข้อความลับ
+            // 1. แสดงข้อความลับโดยการเอาคลาส hidden ออก
             secretDiv.classList.remove('hidden');
 
-            // 2. ซ่อนปุ่ม (เพื่อให้ดูเรียบร้อย)
+            // 2. ซ่อนปุ่ม
             button.style.display = 'none';
 
-            // 3. (เลือกได้) ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น
+            // 3. ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น (ต้องรอเล็กน้อยเพื่อให้ DOM อัปเดต)
             setTimeout(() => {
                 secretDiv.style.opacity = '1';
                 secretDiv.style.transform = 'translateY(0)';
