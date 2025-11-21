@@ -202,7 +202,7 @@
             <div class="card-face card-front">
                 <div id="music-button-container">
                     <button id="music-button" onclick="toggleMusic()">
-                        <span id="music-icon">🎵</span> เปิดเพลง
+                        <span id="music-icon">🎵</span> Canon in D
                     </button>
                 </div>
 
@@ -236,9 +236,11 @@
     <script>
         // *** 1. ข้อมูลเพลง: Canon in D - Pachelbel ***
         const YOUTUBE_VIDEO_ID = "4u-rW-7lVbE"; // ID เพลง Canon in D
+        const MUSIC_TITLE = "Canon in D";
         let player;
         let isPlaying = false;
         let playerReady = false;
+        let isMuted = true; // สถานะเริ่มต้นของเสียง
 
         // ฟังก์ชันเมื่อ YouTube API พร้อมใช้งาน
         function onYouTubeIframeAPIReady() {
@@ -263,27 +265,77 @@
         
         function onPlayerReady(event) {
             playerReady = true;
+            event.target.mute(); // ปิดเสียงไว้ก่อน
         }
 
         // ฟังก์ชันอัปเดตสถานะปุ่มเพลง
-        function onPlayerStateChange(event) {
+        function updateMusicButton() {
             const musicButton = document.getElementById('music-button');
+            let icon = isPlaying ? '🎶' : '🎵';
+            let status = isMuted ? ' (ปิดเสียง)' : '';
+            
+            if (isPlaying && isMuted) {
+                 musicButton.innerHTML = `${icon} เปิดเสียง`;
+                 musicButton.style.borderColor = 'orange'; // เน้นว่าต้องเปิดเสียง
+                 musicButton.style.color = 'orange';
+            } else if (isPlaying && !isMuted) {
+                musicButton.innerHTML = `${icon} หยุดเพลง`;
+                musicButton.style.borderColor = 'var(--primary-color)';
+                musicButton.style.color = 'var(--primary-color)';
+            } else {
+                musicButton.innerHTML = `${icon} ${MUSIC_TITLE}`;
+                musicButton.style.borderColor = 'var(--primary-color)';
+                musicButton.style.color = 'var(--primary-color)';
+            }
+        }
+
+        function onPlayerStateChange(event) {
             if (event.data === YT.PlayerState.PLAYING) {
                 isPlaying = true;
-                musicButton.innerHTML = '🎶 หยุดเพลง';
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
-                musicButton.innerHTML = '🎵 เปิดเพลง';
             }
+            isMuted = player.isMuted();
+            updateMusicButton();
         }
 
         // ฟังก์ชันสำหรับสลับการเล่น/หยุดเพลงด้วยตนเอง
         function toggleMusic() {
-            if (player && isPlaying) {
-                player.pauseVideo();
-            } else if (player) {
+            if (!playerReady) return;
+
+            if (isPlaying) {
+                if (!isMuted) {
+                    player.pauseVideo();
+                } else {
+                    // ถ้าเพลงเล่นอยู่แต่ปิดเสียงอยู่ ให้เปิดเสียง
+                    player.unMute();
+                    isMuted = false;
+                }
+            } else {
                 player.playVideo();
+                // ถ้าเริ่มเล่นด้วยปุ่มนี้ ให้เปิดเสียงทันที
+                player.unMute();
+                isMuted = false;
             }
+            updateMusicButton();
+        }
+        
+        // ฟังก์ชันลองเล่นเพลงซ้ำ (แก้ไข Autoplay)
+        function tryPlayMusic(attempts) {
+            if (!playerReady || attempts <= 0) return;
+            
+            player.playVideo().catch(error => {
+                console.warn("Autoplay blocked. Retrying or muting...");
+                
+                // ถ้ายืนยันว่าเล่นไม่ได้ ให้ลองเล่นแบบปิดเสียง
+                if (attempts === 1) {
+                    player.mute();
+                    player.playVideo();
+                    alert(`💡 เพลง ${MUSIC_TITLE} เริ่มเล่นแล้ว แต่เบราว์เซอร์บังคับปิดเสียงไว้! กรุณากดปุ่ม "เปิดเสียง" ที่มุมขวาบนเพื่อฟังครับ/ค่ะ`);
+                }
+                
+                setTimeout(() => tryPlayMusic(attempts - 1), 500);
+            });
         }
 
         // *** 2. Typing Effect ***
@@ -324,14 +376,14 @@
             }
         }
         
-        // *** 3. Flip Card Function (FIXED) ***
+        // *** 3. Flip Card Function (FIXED: Final Attempt) ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
             
-            // 1. สั่งเล่นเพลงทันทีที่คลิก (แก้ไขปัญหา Autoplay Policy)
+            // 1. สั่งเล่นเพลงทันทีที่คลิก (ใช้การ Try/Retry)
             if (playerReady && !isPlaying) {
-                player.playVideo();
+                tryPlayMusic(3); 
             }
 
             // 2. พลิกการ์ด
