@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🕯️ จดหมายเปิดผนึก</title>
+    <title>🕯️ จดหมายรักพร้อมเพลง</title>
+    
+    <script src="https://www.youtube.com/iframe_api"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
         
         :root {
-            --primary-color: #900C3F; /* Burgundy/Deep Red */
-            --secondary-color: #FFC300; /* Gold Accent */
-            --bg-color: #fcfcfc; /* Near White */
+            --primary-color: #900C3F; 
+            --secondary-color: #FFC300;
+            --bg-color: #fcfcfc;
             --text-color: #333;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Sarabun', sans-serif;
@@ -19,19 +21,19 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: #0c142c; /* Midnight Blue Background */
+            background-color: #0c142c; 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            perspective: 1500px; /* เพิ่มมิติ 3D */
+            perspective: 1500px;
             overflow: hidden;
-            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); /* ไล่สีพื้นหลัง */
+            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); 
         }
 
         /* ------------------------------------- */
-        /* ส่วนของ Card (จดหมาย) */
+        /* Card Styles (Same as before) */
         /* ------------------------------------- */
         .love-card-wrapper {
             width: 380px;
@@ -47,11 +49,10 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1); /* แอนิเมชั่นพลิกที่นุ่มนวล */
+            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
             border-radius: 10px;
         }
         
-        /* สั่งพลิกการ์ดเมื่อคลาส 'flipped' ถูกเพิ่ม */
         .flipped .love-card {
             transform: rotateY(180deg);
         }
@@ -72,7 +73,6 @@
             border: 1px solid #ddd;
         }
 
-        /* ด้านหน้าของการ์ด (ซองจดหมาย) */
         .card-front {
             background-color: #f7f7f7;
             border-left: 10px solid var(--primary-color);
@@ -88,7 +88,7 @@
         .card-front .seal {
             font-size: 70px;
             color: var(--secondary-color);
-            animation: breathe 3s infinite alternate; /* แอนิเมชั่นหัวใจเรืองแสง */
+            animation: breathe 3s infinite alternate;
         }
 
         @keyframes breathe {
@@ -96,7 +96,6 @@
             to { opacity: 1; transform: scale(1.05); }
         }
 
-        /* ด้านหลังของการ์ด (เนื้อจดหมาย) */
         .card-back {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -114,7 +113,6 @@
             margin-bottom: 25px;
         }
 
-        /* สไตล์สำหรับข้อความที่พิมพ์เอง */
         .typing-container {
             min-height: 150px;
             overflow: hidden;
@@ -162,18 +160,52 @@
             transform: translateX(-50%) scale(1.05);
         }
         
-        .flipped #open-button {
-            background-color: #0c142c;
-            color: var(--secondary-color);
+        /* ------------------------------------- */
+        /* ปุ่มเพลงและ Player */
+        /* ------------------------------------- */
+        #music-button-container {
+            position: absolute;
+            top: 20px; /* วางไว้ด้านบนขวาของการ์ด */
+            right: 20px;
+            z-index: 30;
+        }
+
+        #music-button {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 8px 15px;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #music-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* ซ่อน YouTube Player อย่างสมบูรณ์ */
+        #youtube-player {
+            display: none; 
         }
     </style>
 </head>
 <body>
 
+    <div id="youtube-player"></div>
+
     <div class="love-card-wrapper" id="card-wrapper">
         <div class="love-card">
             
             <div class="card-face card-front">
+                <div id="music-button-container">
+                    <button id="music-button" onclick="toggleMusic()">
+                        <span id="music-icon">🎵</span> เปิดเพลง
+                    </button>
+                </div>
+
                 <div class="seal">✉️</div>
                 <h2>An Eternal Letter</h2>
                 <p style="font-style: italic; color: #666;">
@@ -202,6 +234,62 @@
     </div>
 
     <script>
+        // *** 1. ข้อมูลเพลง: เปลี่ยน YOUR_YOUTUBE_VIDEO_ID เป็น ID เพลงที่คุณต้องการ ***
+        // ตัวอย่าง: ถ้า URL คือ https://www.youtube.com/watch?v=dQw4w9WgXcQ 
+        // ID คือ dQw4w9WgXcQ
+        const YOUTUBE_VIDEO_ID = "gC3q4Oq6w7w"; // ตัวอย่าง: เพลงบรรเลงโรแมนติก
+        let player;
+        let isPlaying = false;
+
+        // ฟังก์ชันเมื่อ API พร้อมใช้งาน
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', 
+                width: '0',
+                videoId: YOUTUBE_VIDEO_ID,
+                playerVars: {
+                    'autoplay': 0, // ปิดการเล่นอัตโนมัติเบื้องต้น
+                    'controls': 0, // ซ่อนตัวควบคุม
+                    'rel': 0, 
+                    'loop': 1, // เล่นวนซ้ำ
+                    'modestbranding': 1,
+                    'playlist': YOUTUBE_VIDEO_ID // ต้องระบุ playlist ID สำหรับ loop
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange 
+                }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            // Player พร้อมแล้ว
+        }
+
+        function onPlayerStateChange(event) {
+            const musicButton = document.getElementById('music-button');
+            const icon = document.getElementById('music-icon');
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                musicButton.innerHTML = '🎶 หยุดเพลง';
+                icon.textContent = '🎶';
+            } else {
+                isPlaying = false;
+                musicButton.innerHTML = '🎵 เปิดเพลง';
+                icon.textContent = '🎵';
+            }
+        }
+
+        // ฟังก์ชันสำหรับสลับการเล่น/หยุดเพลง
+        function toggleMusic() {
+            if (player && isPlaying) {
+                player.pauseVideo();
+            } else if (player) {
+                player.playVideo();
+            }
+        }
+
+        // *** 2. Typing Effect (Same as before) ***
         const message = 
             "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
             "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
@@ -209,32 +297,26 @@
             "**ฉันรักคุณที่สุดในจักรวาลนี้**";
         
         let i = 0;
-        const speed = 50; // ความเร็วในการพิมพ์ (มิลลิวินาทีต่อตัวอักษร)
+        const speed = 50;
         const typingElement = document.getElementById("typing-text");
 
-        // ฟังก์ชันสำหรับพิมพ์ข้อความทีละตัวอักษร
         function typeWriter() {
             if (i < message.length) {
                 let char = message.charAt(i);
                 
-                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
                 if (char === '*' && message.substring(i, i + 2) === '**') {
-                    // เปิดแท็ก strong 
                     typingElement.innerHTML += '<strong>';
                     i += 2; 
                     char = message.charAt(i);
-                    // พิมพ์ข้อความใน strong
                     while (i < message.length && message.substring(i, i + 2) !== '**') {
                          typingElement.innerHTML += message.charAt(i);
                          i++;
                     }
-                    // ปิดแท็ก strong
                     if (message.substring(i, i + 2) === '**') {
                         typingElement.innerHTML += '</strong>';
                         i += 2;
                     }
                 } else {
-                    // พิมพ์ตัวอักษรปกติ
                     typingElement.innerHTML += char;
                     i++;
                 }
@@ -243,24 +325,32 @@
             }
         }
         
-        // ฟังก์ชันสำหรับพลิกการ์ดเมื่อกดปุ่ม
+        // *** 3. Flip Card Function (Update) ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
             
-            // 1. สลับคลาสเพื่อพลิกการ์ด
             wrapper.classList.toggle('flipped'); 
 
-            // 2. เมื่อการ์ดพลิกไปด้านหลัง
             if (wrapper.classList.contains('flipped')) {
-                // เปลี่ยนข้อความปุ่ม
+                // *** เมื่อพลิกการ์ด: เล่นเพลงอัตโนมัติ ***
+                if (player) {
+                    player.playVideo();
+                }
+
                 button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
+                button.style.backgroundColor = '#0c142c';
+                button.style.color = 'var(--secondary-color)';
                 
-                // เริ่มพิมพ์ข้อความหลังจากพลิกไปแล้ว 1.2 วินาที (เท่ากับแอนิเมชั่น)
                 setTimeout(typeWriter, 1200); 
             } else {
-                // พลิกกลับไปด้านหน้า (ถ้ามี)
+                // *** เมื่อพลิกกลับ: หยุดเพลง ***
+                if (player) {
+                    player.pauseVideo();
+                }
                 button.textContent = 'เปิดผนึกจดหมาย';
+                button.style.backgroundColor = 'var(--primary-color)';
+                button.style.color = 'white';
             }
         }
     </script>
