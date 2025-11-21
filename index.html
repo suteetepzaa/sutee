@@ -178,36 +178,30 @@
                 <div class="seal">✉️</div>
                 <h2>An Eternal Letter</h2>
                 <p style="font-style: italic; color: #666;">
-                    ถึง **[ชื่อคนที่คุณรัก]**<br>
-                    มีข้อความสำคัญรอคุณอยู่ โปรดเปิดผนึก...
+                    พี่ปุ้กปิ้ก<br>
                 </p>
             </div>
             
             <div class="card-face card-back">
-                <h3>จากฉัน ถึงคุณ</h3>
+                <h3>พี่ปุ้กปิ้ก</h3>
                 
                 <div id="typing-text" class="typing-container">
                     </div>
 
                 <div class="signature">
-                    รักเสมอ<br>
-                    **[ชื่อของคุณ]**
                 </div>
             </div>
             
         </div>
         
         <button id="open-button" onclick="flipCard()">
-            เปิดผนึกจดหมาย
+            ลองกดดู
         </button>
     </div>
 
     <script>
         const message = 
-            "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
-            "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
-            "ฉันอยากจะมอบทุกอย่างที่มีให้คุณ และเดินเคียงข้างคุณตลอดไป " +
-            "**ฉันรักคุณที่สุดในจักรวาลนี้**";
+            "รักมวั้กกครับ คับ คร้าบ คับ ";
         
         let i = 0;
         const speed = 50; // ความเร็วในการพิมพ์ (มิลลิวินาทีต่อตัวอักษร)
@@ -255,13 +249,13 @@
             // 2. เมื่อการ์ดพลิกไปด้านหลัง
             if (wrapper.classList.contains('flipped')) {
                 // เปลี่ยนข้อความปุ่ม
-                button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
+                button.textContent = 'luvv'; 
                 
                 // เริ่มพิมพ์ข้อความหลังจากพลิกไปแล้ว 1.2 วินาที (เท่ากับแอนิเมชั่น)
                 setTimeout(typeWriter, 1200); 
             } else {
                 // พลิกกลับไปด้านหน้า (ถ้ามี)
-                button.textContent = 'เปิดผนึกจดหมาย';
+                button.textContent = 'ลองกดดู';
             }
         }
     </script>
