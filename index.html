@@ -3,60 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌹 จดหมายรักนิรันดร์</title>
+    <title>🕯️ จดหมายเปิดผนึก</title>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;600&family=Parisienne&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
+        
+        :root {
+            --primary-color: #900C3F; /* Burgundy/Deep Red */
+            --secondary-color: #FFC300; /* Gold Accent */
+            --bg-color: #fcfcfc; /* Near White */
+            --text-color: #333;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Sarabun', sans-serif;
+        }
 
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #0d0d1a; 
-            color: #f0f0f5; 
+            font-family: var(--font-sans);
+            background-color: #0c142c; /* Midnight Blue Background */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            perspective: 1000px;
-            overflow-y: auto;
+            perspective: 1500px; /* เพิ่มมิติ 3D */
+            overflow: hidden;
+            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); /* ไล่สีพื้นหลัง */
         }
 
         /* ------------------------------------- */
-        /* ส่วนของ Parallax Background Effect */
-        /* ------------------------------------- */
-        .parallax-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* คุณสามารถเปลี่ยน URL รูปภาพตรงนี้ได้เลย */
-            background: url('https://images.unsplash.com/photo-1542401886-65d6c61db217') no-repeat center center/cover; 
-            opacity: 0.3;
-            z-index: 1;
-        }
-
-        /* ------------------------------------- */
-        /* ส่วนของ Card (หัวใจหลักของเนื้อหา) */
+        /* ส่วนของ Card (จดหมาย) */
         /* ------------------------------------- */
         .love-card-wrapper {
-            width: 350px;
-            height: 450px;
+            width: 380px;
+            height: 500px;
             position: relative;
             z-index: 10;
-            margin: 50px 0;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            transition: transform 0.8s ease-in-out;
         }
 
         .love-card {
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border-radius: 20px;
+            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1); /* แอนิเมชั่นพลิกที่นุ่มนวล */
+            border-radius: 10px;
         }
         
-        /* *** จุดสำคัญ: การ์ดจะพลิกเมื่อมีคลาส 'flipped' เท่านั้น *** */
+        /* สั่งพลิกการ์ดเมื่อคลาส 'flipped' ถูกเพิ่ม */
         .flipped .love-card {
             transform: rotateY(180deg);
         }
@@ -68,140 +63,204 @@
             backface-visibility: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
-            padding: 30px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: 10px;
             box-sizing: border-box;
+            background-color: var(--bg-color);
+            border: 1px solid #ddd;
         }
 
-        /* ด้านหน้าของการ์ด */
+        /* ด้านหน้าของการ์ด (ซองจดหมาย) */
         .card-front {
-            background: linear-gradient(145deg, #ffc0cb 0%, #ff69b4 100%);
-            color: #8b0000;
+            background-color: #f7f7f7;
+            border-left: 10px solid var(--primary-color);
         }
 
         .card-front h2 {
-            font-family: 'Parisienne', cursive;
+            font-family: var(--font-serif);
             font-size: 2.5em;
-            margin: 0;
+            color: var(--primary-color);
+            margin-top: 20px;
         }
         
-        .card-front p {
+        .card-front .seal {
+            font-size: 70px;
+            color: var(--secondary-color);
+            animation: breathe 3s infinite alternate; /* แอนิเมชั่นหัวใจเรืองแสง */
+        }
+
+        @keyframes breathe {
+            from { opacity: 0.8; transform: scale(1); }
+            to { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* ด้านหลังของการ์ด (เนื้อจดหมาย) */
+        .card-back {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transform: rotateY(180deg);
+            text-align: left;
+            justify-content: flex-start;
+            padding-top: 50px;
+        }
+        
+        .card-back h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8em;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* สไตล์สำหรับข้อความที่พิมพ์เอง */
+        .typing-container {
+            min-height: 150px;
+            overflow: hidden;
+            border-left: 3px solid var(--secondary-color);
+            padding-left: 15px;
+            line-height: 1.8;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        .typing-container strong {
+            color: var(--primary-color);
             font-weight: 600;
         }
 
-        /* ด้านหลังของการ์ด */
-        .card-back {
-            background-color: #ffffff; 
-            color: #333;
-            transform: rotateY(180deg);
-            text-align: left;
-            padding: 40px;
-            border: 5px solid #ff69b4;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .card-back .secret-message h3 {
-            font-size: 1.5em;
-            color: #e91e63;
-        }
-        
-        .card-back .signature {
-            margin-top: 20px;
+        .signature {
+            margin-top: 30px;
             text-align: right;
-            font-style: italic;
-            font-size: 0.9em;
-            color: #666;
+            font-family: var(--font-serif);
+            font-size: 1.2em;
+            color: var(--primary-color);
+            width: 100%;
         }
 
-        /* ปุ่มพลิกการ์ด */
-        #flip-button {
+        /* ปุ่มเปิดผนึก */
+        #open-button {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #8b0000;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 20px;
-            font-size: 1em;
+            padding: 12px 25px;
+            font-size: 1.1em;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: all 0.3s ease;
             z-index: 20;
+            box-shadow: 0 5px 15px rgba(144, 12, 63, 0.4);
         }
         
-        #flip-button:hover {
-            background-color: #ff007a;
+        #open-button:hover {
+            background-color: #b70f53;
             transform: translateX(-50%) scale(1.05);
         }
-
-        /* Heart Animation (Simple Glow) */
-        .heart-glow {
-            font-size: 60px;
-            margin-bottom: 20px;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { text-shadow: 0 0 10px rgba(255, 105, 180, 0.8); }
-            100% { text-shadow: 0 0 20px rgba(255, 105, 180, 1), 0 0 30px rgba(255, 0, 127, 0.5); }
+        
+        .flipped #open-button {
+            background-color: #0c142c;
+            color: var(--secondary-color);
         }
     </style>
 </head>
 <body>
-    <div class="parallax-bg"></div>
 
     <div class="love-card-wrapper" id="card-wrapper">
         <div class="love-card">
             
             <div class="card-face card-front">
-                <div class="heart-glow">💖</div>
-                <h2>To My Dearest **[ชื่อคนที่คุณรัก]**</h2>
-                <p>จดหมายรักฉบับนี้ถูกส่งมาจากส่วนลึกของหัวใจฉัน<br>คุณคือคนเดียวที่ทำให้โลกของฉันสมบูรณ์แบบ</p>
-                <div class="emoji-note">... กดปุ่มด้านล่างนี้เพื่อเปิดผนึก ...</div>
+                <div class="seal">✉️</div>
+                <h2>An Eternal Letter</h2>
+                <p style="font-style: italic; color: #666;">
+                    ถึง **[ชื่อคนที่คุณรัก]**<br>
+                    มีข้อความสำคัญรอคุณอยู่ โปรดเปิดผนึก...
+                </p>
             </div>
             
             <div class="card-face card-back">
-                <div class="secret-message">
-                    <h3>✉️ ข้อความจากใจจริง</h3>
-                    <p>
-                        "การได้อยู่เคียงข้างคุณในทุกๆ วัน คือความมหัศจรรย์ที่ฉันภาวนา<br>
-                        คุณคือความหมายของความรักที่แท้จริง และฉันจะรักคุณไม่เปลี่ยนแปลง"<br>
-                        <br>
-                        **ฉันรักคุณ. I love you. Te amo.**
-                    </p>
-                </div>
+                <h3>จากฉัน ถึงคุณ</h3>
+                
+                <div id="typing-text" class="typing-container">
+                    </div>
+
                 <div class="signature">
-                    ด้วยรักนิรันดร์<br>
-                    จาก **[ชื่อของคุณ]**
+                    รักเสมอ<br>
+                    **[ชื่อของคุณ]**
                 </div>
             </div>
             
         </div>
         
-        <button id="flip-button" onclick="flipCard()">
-            เปิดจดหมายรัก
+        <button id="open-button" onclick="flipCard()">
+            เปิดผนึกจดหมาย
         </button>
     </div>
 
     <script>
+        const message = 
+            "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
+            "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
+            "ฉันอยากจะมอบทุกอย่างที่มีให้คุณ และเดินเคียงข้างคุณตลอดไป " +
+            "**ฉันรักคุณที่สุดในจักรวาลนี้**";
+        
+        let i = 0;
+        const speed = 50; // ความเร็วในการพิมพ์ (มิลลิวินาทีต่อตัวอักษร)
+        const typingElement = document.getElementById("typing-text");
+
+        // ฟังก์ชันสำหรับพิมพ์ข้อความทีละตัวอักษร
+        function typeWriter() {
+            if (i < message.length) {
+                let char = message.charAt(i);
+                
+                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
+                if (char === '*' && message.substring(i, i + 2) === '**') {
+                    // เปิดแท็ก strong 
+                    typingElement.innerHTML += '<strong>';
+                    i += 2; 
+                    char = message.charAt(i);
+                    // พิมพ์ข้อความใน strong
+                    while (i < message.length && message.substring(i, i + 2) !== '**') {
+                         typingElement.innerHTML += message.charAt(i);
+                         i++;
+                    }
+                    // ปิดแท็ก strong
+                    if (message.substring(i, i + 2) === '**') {
+                        typingElement.innerHTML += '</strong>';
+                        i += 2;
+                    }
+                } else {
+                    // พิมพ์ตัวอักษรปกติ
+                    typingElement.innerHTML += char;
+                    i++;
+                }
+
+                setTimeout(typeWriter, speed);
+            }
+        }
+        
         // ฟังก์ชันสำหรับพลิกการ์ดเมื่อกดปุ่ม
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
-            const button = document.getElementById('flip-button');
+            const button = document.getElementById('open-button');
             
-            // Toggle คลาส 'flipped' เพื่อสั่งให้ CSS ทำการพลิก
+            // 1. สลับคลาสเพื่อพลิกการ์ด
             wrapper.classList.toggle('flipped'); 
 
-            // เปลี่ยนข้อความปุ่มหลังจากพลิกแล้ว (ทางเลือก)
+            // 2. เมื่อการ์ดพลิกไปด้านหลัง
             if (wrapper.classList.contains('flipped')) {
-                button.textContent = 'อ่านซ้ำ (พลิกกลับ)';
-                button.style.backgroundColor = '#007bff'; // เปลี่ยนสีปุ่ม
+                // เปลี่ยนข้อความปุ่ม
+                button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
+                
+                // เริ่มพิมพ์ข้อความหลังจากพลิกไปแล้ว 1.2 วินาที (เท่ากับแอนิเมชั่น)
+                setTimeout(typeWriter, 1200); 
             } else {
-                button.textContent = 'เปิดจดหมายรัก';
-                button.style.backgroundColor = '#8b0000'; // สีเดิม
+                // พลิกกลับไปด้านหน้า (ถ้ามี)
+                button.textContent = 'เปิดผนึกจดหมาย';
             }
         }
     </script>
