@@ -24,7 +24,6 @@
 
         body {
             font-family: var(--font-sans);
-            /* *** พื้นหลัง Gradient เคลื่อนไหว โทนพาสเทล *** */
             background: linear-gradient(-45deg, var(--pastel-blue), var(--pastel-pink), var(--pastel-purple), var(--pastel-yellow));
             background-size: 400% 400%;
             animation: gradientBackground 15s ease infinite; 
@@ -74,8 +73,8 @@
             height: 500px;
             position: relative;
             z-index: 10; 
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* เงาอ่อนลง */
-            border-radius: 15px; /* มุมโค้งมนขึ้น */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); 
+            border-radius: 15px; 
         }
 
         .love-card {
@@ -143,33 +142,38 @@
             text-align: left;
             justify-content: flex-start;
             padding-top: 50px;
-            position: relative;
+            position: relative; /* สำคัญสำหรับจัดตำแหน่งรูปภาพ */
         }
 
-        /* *** รูปภาพขนาดเล็กด้านหลังจดหมาย *** */
+        /* *** รูปภาพขนาดเล็กด้านหลังจดหมาย: จัดวางใหม่ *** */
         .card-back .small-image {
             position: absolute;
-            bottom: 20px; /* จัดตำแหน่งด้านล่าง */
-            right: 20px; /* จัดตำแหน่งด้านขวา */
-            width: 80px; /* ขนาดรูปภาพ */
-            height: 80px;
-            border-radius: 50%; /* ทำให้เป็นวงกลม */
-            object-fit: cover; /* ครอบคลุมพื้นที่ */
-            border: 3px solid var(--primary-color); /* กรอบรูป */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 2; /* ให้อยู่เหนือข้อความเล็กน้อย */
+            /* ย้ายไปอยู่กลางด้านล่างมากขึ้น */
+            bottom: 25px; 
+            left: 50%; /* จัดกึ่งกลางแนวนอน */
+            transform: translateX(-50%); /* ดึงกลับครึ่งหนึ่งของความกว้างรูป */
+            
+            width: 90px; /* เพิ่มขนาดเล็กน้อย */
+            height: 90px;
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 4px solid var(--primary-color); /* เพิ่มขนาดกรอบ */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* เพิ่มเงาให้ดูมีมิติ */
+            z-index: 2; 
         }
         
         /* สไตล์สำหรับข้อความที่พิมพ์เอง */
         .typing-container {
             min-height: 150px;
             overflow: hidden;
-            border-left: 3px solid var(--primary-color); /* ใช้สีหลัก */
+            border-left: 3px solid var(--primary-color); 
             padding-left: 15px;
             line-height: 1.8;
             font-size: 1.1em;
             font-weight: 300;
             color: var(--text-color); 
+            /* เพิ่ม padding ด้านล่าง เพื่อไม่ให้รูปทับข้อความ */
+            margin-bottom: 120px; 
         }
 
         .typing-container strong {
@@ -205,7 +209,7 @@
         }
         
         #open-button:hover {
-            background-color: #d15694; /* Darker pink on hover */
+            background-color: #d15694; 
             transform: translateX(-50%) scale(1.05);
         }
         
@@ -315,7 +319,7 @@
         // *** 3. Floating Hearts JavaScript (Pastel Tone, Float Up) ***
         const heartCount = 40; 
         const heartsContainer = document.body;
-        const pastelHeartColors = ['#FFC0CB', '#FFB6C1', '#FF69B4', '#F08080', '#E6E6FA']; // Pastel pinks and purples
+        const pastelHeartColors = ['#FFC0CB', '#FFB6C1', '#FF69B4', '#F08080', '#E6E6FA', '#ADD8E6', '#90EE90']; // เพิ่มสีฟ้าและเขียวพาสเทล
 
         function createHeart() {
             const heart = document.createElement('span');
@@ -328,7 +332,7 @@
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 8 + 7 + 's'; 
             heart.style.animationDelay = Math.random() * 5 + 's';
-            heart.style.fontSize = Math.random() * 0.8 + 0.8 + 'em'; // 0.8em - 1.6em
+            heart.style.fontSize = Math.random() * 0.8 + 0.8 + 'em'; 
             
             heartsContainer.appendChild(heart);
             
@@ -341,7 +345,7 @@
             createHeart();
         }
 
-        setInterval(createHeart, 400); // New heart every 0.4 second
+        setInterval(createHeart, 400); 
     </script>
 </body>
 </html>
