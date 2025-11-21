@@ -1,63 +1,55 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f7f3f9; /* พื้นหลังสีม่วงอ่อน/ชมพูอ่อน */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💌 ข้อความจากใจ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="heart-icon">❤️</div>
+        <h1 class="main-message">ถึง [ชื่อคนที่คุณรัก]</h1>
+        <p class="love-text">
+            ตั้งแต่วันแรกที่ได้รู้จักกัน โลกของฉันก็เปลี่ยนไป<br>
+            คุณคือแสงสว่าง ความสุข และเหตุผลที่ฉันยิ้มได้ทุกวัน
+        </p>
 
-.container {
-    background-color: #ffffff;
-    padding: 40px 60px;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    max-width: 500px;
-    animation: fadeIn 2s ease-in-out;
-}
+        <button id="surprise-button" onclick="showSecretMessage()">
+            คลิกที่นี่เพื่อรับข้อความพิเศษ!
+        </button>
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        <div id="secret-message" class="hidden">
+            <p>
+                และอีกสิ่งหนึ่งที่ฉันอยากจะบอก...<br>
+                **คุณคือคนที่ใช่สำหรับฉันตลอดไป**<br>
+                ขอบคุณที่เข้ามาในชีวิตนะ! 💖
+            </p>
+        </div>
 
-.heart-icon {
-    font-size: 60px;
-    margin-bottom: 20px;
-    animation: beat 1.5s infinite alternate; /* แอนิเมชั่นหัวใจเต้น */
-}
+        <div class="signature">
+            ด้วยรักเสมอ<br>
+            จาก [ชื่อของคุณ]
+        </div>
+    </div>
 
-@keyframes beat {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
-}
+    <script>
+        function showSecretMessage() {
+            const secretDiv = document.getElementById('secret-message');
+            const button = document.getElementById('surprise-button');
 
-.main-message {
-    color: #e91e63; /* สีชมพูแดง */
-    font-size: 2.2em;
-    margin-bottom: 15px;
-}
+            // 1. แสดงข้อความลับ
+            secretDiv.classList.remove('hidden');
 
-.love-text {
-    color: #4a4a4a;
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 30px;
-}
+            // 2. ซ่อนปุ่ม (เพื่อให้ดูเรียบร้อย)
+            button.style.display = 'none';
 
-.love-text strong {
-    color: #ff007a;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.signature {
-    margin-top: 30px;
-    color: #888;
-    font-style: italic;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-    font-size: 0.9em;
-}
+            // 3. (เลือกได้) ทำให้ข้อความที่ซ่อนไว้มีแอนิเมชั่น
+            setTimeout(() => {
+                secretDiv.style.opacity = '1';
+                secretDiv.style.transform = 'translateY(0)';
+            }, 10);
+        }
+    </script>
+</body>
+</html>
