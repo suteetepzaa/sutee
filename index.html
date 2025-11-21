@@ -19,15 +19,16 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: #0c142c; /* Midnight Blue Background */
+            background-color: #0c142c; 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            perspective: 1500px; /* เพิ่มมิติ 3D */
+            /* *** ปรับ Perspective ให้สูงขึ้นเล็กน้อยเพื่อความสมูท *** */
+            perspective: 1800px; 
             overflow: hidden;
-            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); /* ไล่สีพื้นหลัง */
+            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); 
         }
 
         /* ------------------------------------- */
@@ -47,7 +48,8 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1); /* แอนิเมชั่นพลิกที่นุ่มนวล */
+            /* *** ปรับ Cubic Bezier เพื่อให้ดูนุ่มนวลและเป็นธรรมชาติยิ่งขึ้น *** */
+            transition: transform 1.5s cubic-bezier(0.55, 0.085, 0.68, 0.53); /* เพิ่มเวลาเป็น 1.5s และใช้ curve ใหม่ */
             border-radius: 10px;
         }
         
@@ -88,7 +90,7 @@
         .card-front .seal {
             font-size: 70px;
             color: var(--secondary-color);
-            animation: breathe 3s infinite alternate; /* แอนิเมชั่นหัวใจเรืองแสง */
+            animation: breathe 3s infinite alternate; 
         }
 
         @keyframes breathe {
@@ -210,7 +212,7 @@
             "**ฉันรักคุณที่สุดในจักรวาลนี้**";
         
         let i = 0;
-        const speed = 50; // ความเร็วในการพิมพ์ (มิลลิวินาทีต่อตัวอักษร)
+        const speed = 50; 
         const typingElement = document.getElementById("typing-text");
         let typingStarted = false;
 
@@ -219,7 +221,6 @@
             if (i < message.length) {
                 let char = message.charAt(i);
                 
-                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
                 if (char === '*' && message.substring(i, i + 2) === '**') {
                     typingElement.innerHTML += '<strong>';
                     i += 2; 
@@ -255,9 +256,9 @@
                 button.style.backgroundColor = '#0c142c';
                 button.style.color = 'var(--secondary-color)';
                 
-                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดแล้ว 1.2 วินาที และยังไม่เคยพิมพ์มาก่อน
+                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดเสร็จ (1.5 วินาที)
                 if (!typingStarted) {
-                    setTimeout(typeWriter, 1200); 
+                    setTimeout(typeWriter, 1500); 
                 }
             } else {
                 // เมื่อพลิกกลับ: อัปเดต UI ปุ่ม
