@@ -1,85 +1,63 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เซอร์ไพรส์รัก 💖</title>
-<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-  body, html {
-    margin:0; padding:0; width:100%; height:100%; font-family:'Kanit', sans-serif;
-    display:flex; justify-content:center; align-items:center;
-    background: linear-gradient(135deg, #ffe6f0, #ffd1d9);
-    overflow:hidden;
-  }
-
-  /* กล่องของขวัญ */
-  .gift-box {
-    position:relative; width:250px; height:250px; background:#ff4ecb;
-    border-radius:25px; box-shadow:0 10px 30px rgba(255,78,203,0.5);
-    display:flex; align-items:center; justify-content:center;
-    flex-direction:column; cursor:pointer; transition:0.6s;
-  }
-  .gift-box.open {
-    width:300px; height:300px; background:#ffe6f0;
-  }
-
-  .gift-text {
-    color:#ff1a75; font-size:1.2rem; text-align:center; opacity:0;
-    transition:0.6s;
-    padding:20px;
-  }
-  .gift-box.open .gift-text {
-    opacity:1;
-  }
-
-  .btn-text {
-    color:white; font-weight:700; margin-top:10px;
-  }
-
-  /* เอฟเฟ็กต์หัวใจ */
-  .heart {
-    position:absolute; width:15px; height:15px; background:#ff4ecb; transform:rotate(45deg);
-    opacity:0.8; animation:fall 4s linear infinite;
-  }
-  .heart:before, .heart:after {
-    content:''; position:absolute; width:15px; height:15px; background:#ff4ecb; border-radius:50%;
-  }
-  .heart:before{top:-7.5px; left:0;}
-  .heart:after{left:7.5px; top:0;}
-
-  @keyframes fall {
-    0%{transform:translateY(0) rotate(45deg) scale(0.5);opacity:1;}
-    100%{transform:translateY(100vh) rotate(45deg) scale(1);opacity:0;}
-  }
-</style>
-</head>
-<body>
-
-<div class="gift-box" id="giftBox" onclick="openGift()">
-  <div class="gift-text">คุณคือคนพิเศษที่สุดในชีวิตของฉัน 💖</div>
-  <div class="btn-text">กดเพื่อเปิดกล่องของขวัญ</div>
-</div>
-
-<script>
-// สร้างหัวใจลอย
-function createHeart(){
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.style.left = Math.random()*100 + 'vw';
-  heart.style.animationDuration = 3 + Math.random()*3 + 's';
-  heart.style.width = 10 + Math.random()*15 + 'px';
-  heart.style.height = heart.style.width;
-  document.body.appendChild(heart);
-  setTimeout(()=>{document.body.removeChild(heart)},4000);
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f3f9; /* พื้นหลังสีม่วงอ่อน/ชมพูอ่อน */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
-setInterval(createHeart,200);
 
-// เปิดกล่องของขวัญ
-function openGift(){
-  document.getElementById('giftBox').classList.add('open');
+.container {
+    background-color: #ffffff;
+    padding: 40px 60px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    animation: fadeIn 2s ease-in-out;
 }
-</script>
 
-</body>
-</html>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.heart-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+    animation: beat 1.5s infinite alternate; /* แอนิเมชั่นหัวใจเต้น */
+}
+
+@keyframes beat {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+.main-message {
+    color: #e91e63; /* สีชมพูแดง */
+    font-size: 2.2em;
+    margin-bottom: 15px;
+}
+
+.love-text {
+    color: #4a4a4a;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.love-text strong {
+    color: #ff007a;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.signature {
+    margin-top: 30px;
+    color: #888;
+    font-style: italic;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    font-size: 0.9em;
+}
