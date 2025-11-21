@@ -8,34 +8,36 @@
 <style>
   body, html {
     margin:0; padding:0; width:100%; height:100%; font-family:'Kanit', sans-serif;
-    display:flex; justify-content:center; align-items:center; background: radial-gradient(circle, #ffe6f0, #ffccd9);
+    display:flex; justify-content:center; align-items:center;
+    background: linear-gradient(135deg, #ffe6f0, #ffd1d9);
     overflow:hidden;
   }
 
-  .card {
-    width:350px; background: linear-gradient(145deg, #ff4ecb, #ff85d0);
-    border-radius:30px; padding:40px; text-align:center; box-shadow: 0 10px 30px rgba(255,78,203,0.4);
-    transform: scale(1); transition: transform 0.3s;
-    cursor:pointer;
-    position:relative;
+  /* กล่องของขวัญ */
+  .gift-box {
+    position:relative; width:250px; height:250px; background:#ff4ecb;
+    border-radius:25px; box-shadow:0 10px 30px rgba(255,78,203,0.5);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; cursor:pointer; transition:0.6s;
   }
-  .card:hover {
-    transform: scale(1.05);
+  .gift-box.open {
+    width:300px; height:300px; background:#ffe6f0;
   }
-  h1 {
-    color:white; font-size:2.5rem; margin-bottom:10px; text-shadow:2px 2px 6px rgba(0,0,0,0.2);
+
+  .gift-text {
+    color:#ff1a75; font-size:1.2rem; text-align:center; opacity:0;
+    transition:0.6s;
+    padding:20px;
   }
-  p {
-    color:#ffe6f0; font-size:1.3rem; margin-bottom:20px;
-  }
-  .gift-message {
-    opacity:0; color:#ff1a75; font-size:1.2rem; transition: 0.5s;
-  }
-  .card.open .gift-message {
+  .gift-box.open .gift-text {
     opacity:1;
   }
 
-  /* หัวใจลอย */
+  .btn-text {
+    color:white; font-weight:700; margin-top:10px;
+  }
+
+  /* เอฟเฟ็กต์หัวใจ */
   .heart {
     position:absolute; width:15px; height:15px; background:#ff4ecb; transform:rotate(45deg);
     opacity:0.8; animation:fall 4s linear infinite;
@@ -45,19 +47,22 @@
   }
   .heart:before{top:-7.5px; left:0;}
   .heart:after{left:7.5px; top:0;}
-  @keyframes fall{
+
+  @keyframes fall {
     0%{transform:translateY(0) rotate(45deg) scale(0.5);opacity:1;}
     100%{transform:translateY(100vh) rotate(45deg) scale(1);opacity:0;}
   }
 </style>
 </head>
 <body>
-<div class="card" id="giftCard" onclick="openCard()">
-  <h1>เซอร์ไพรส์! 💖</h1>
-  <p>สำหรับ [ชื่อแฟนของคุณ]</p>
-  <div class="gift-message">คุณคือคนพิเศษที่สุดในชีวิตของฉัน 🌹</div>
+
+<div class="gift-box" id="giftBox" onclick="openGift()">
+  <div class="gift-text">คุณคือคนพิเศษที่สุดในชีวิตของฉัน 💖</div>
+  <div class="btn-text">กดเพื่อเปิดกล่องของขวัญ</div>
 </div>
+
 <script>
+// สร้างหัวใจลอย
 function createHeart(){
   const heart = document.createElement('div');
   heart.classList.add('heart');
@@ -68,11 +73,13 @@ function createHeart(){
   document.body.appendChild(heart);
   setTimeout(()=>{document.body.removeChild(heart)},4000);
 }
-setInterval(createHeart,150);
+setInterval(createHeart,200);
 
-function openCard(){
-  document.getElementById('giftCard').classList.add('open');
+// เปิดกล่องของขวัญ
+function openGift(){
+  document.getElementById('giftBox').classList.add('open');
 }
 </script>
+
 </body>
 </html>
