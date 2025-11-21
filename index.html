@@ -3,17 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🕯️ จดหมายรักพร้อมเพลง</title>
-    
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <title>🕯️ จดหมายเปิดผนึก</title>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap'); 
         
         :root {
-            --primary-color: #900C3F; 
-            --secondary-color: #FFC300; 
-            --bg-color: #fcfcfc; 
+            --primary-color: #900C3F; /* Burgundy/Deep Red */
+            --secondary-color: #FFC300; /* Gold Accent */
+            --bg-color: #fcfcfc; /* Near White */
             --text-color: #333;
             --font-serif: 'Playfair Display', serif;
             --font-sans: 'Sarabun', sans-serif;
@@ -21,19 +19,19 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: #0c142c; 
+            background-color: #0c142c; /* Midnight Blue Background */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            perspective: 1500px;
+            perspective: 1500px; /* เพิ่มมิติ 3D */
             overflow: hidden;
-            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%);
+            background-image: radial-gradient(circle at center, #1e3a8a 0%, #0c142c 100%); /* ไล่สีพื้นหลัง */
         }
 
         /* ------------------------------------- */
-        /* Card Styles */
+        /* ส่วนของ Card (จดหมาย) */
         /* ------------------------------------- */
         .love-card-wrapper {
             width: 380px;
@@ -49,10 +47,11 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1); /* แอนิเมชั่นพลิกที่นุ่มนวล */
             border-radius: 10px;
         }
         
+        /* สั่งพลิกการ์ดเมื่อคลาส 'flipped' ถูกเพิ่ม */
         .flipped .love-card {
             transform: rotateY(180deg);
         }
@@ -73,6 +72,7 @@
             border: 1px solid #ddd;
         }
 
+        /* ด้านหน้าของการ์ด (ซองจดหมาย) */
         .card-front {
             background-color: #f7f7f7;
             border-left: 10px solid var(--primary-color);
@@ -88,7 +88,7 @@
         .card-front .seal {
             font-size: 70px;
             color: var(--secondary-color);
-            animation: breathe 3s infinite alternate;
+            animation: breathe 3s infinite alternate; /* แอนิเมชั่นหัวใจเรืองแสง */
         }
 
         @keyframes breathe {
@@ -96,6 +96,7 @@
             to { opacity: 1; transform: scale(1.05); }
         }
 
+        /* ด้านหลังของการ์ด (เนื้อจดหมาย) */
         .card-back {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -113,6 +114,7 @@
             margin-bottom: 25px;
         }
 
+        /* สไตล์สำหรับข้อความที่พิมพ์เอง */
         .typing-container {
             min-height: 150px;
             overflow: hidden;
@@ -160,52 +162,18 @@
             transform: translateX(-50%) scale(1.05);
         }
         
-        /* ------------------------------------- */
-        /* ปุ่มเพลงและ Player */
-        /* ------------------------------------- */
-        #music-button-container {
-            position: absolute;
-            top: 20px; 
-            right: 20px;
-            z-index: 30;
-        }
-
-        #music-button {
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 2px solid var(--primary-color);
-            padding: 8px 15px;
-            font-size: 0.9em;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        #music-button:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        /* ซ่อน YouTube Player อย่างสมบูรณ์ */
-        #youtube-player {
-            display: none; 
+        .flipped #open-button {
+            background-color: #0c142c;
+            color: var(--secondary-color);
         }
     </style>
 </head>
 <body>
 
-    <div id="youtube-player"></div>
-
     <div class="love-card-wrapper" id="card-wrapper">
         <div class="love-card">
             
             <div class="card-face card-front">
-                <div id="music-button-container">
-                    <button id="music-button" onclick="toggleMusic()">
-                        <span id="music-icon">🎵</span> Canon in D
-                    </button>
-                </div>
-
                 <div class="seal">✉️</div>
                 <h2>An Eternal Letter</h2>
                 <p style="font-style: italic; color: #666;">
@@ -234,111 +202,7 @@
     </div>
 
     <script>
-        // *** 1. ข้อมูลเพลง: Canon in D - Pachelbel ***
-        const YOUTUBE_VIDEO_ID = "4u-rW-7lVbE"; // ID เพลง Canon in D
-        const MUSIC_TITLE = "Canon in D";
-        let player;
-        let isPlaying = false;
-        let playerReady = false;
-        let isMuted = true; // สถานะเริ่มต้นของเสียง
-
-        // ฟังก์ชันเมื่อ YouTube API พร้อมใช้งาน
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0', 
-                width: '0',
-                videoId: YOUTUBE_VIDEO_ID,
-                playerVars: {
-                    'autoplay': 0, 
-                    'controls': 0, 
-                    'rel': 0, 
-                    'loop': 1, 
-                    'modestbranding': 1,
-                    'playlist': YOUTUBE_VIDEO_ID 
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange 
-                }
-            });
-        }
-        
-        function onPlayerReady(event) {
-            playerReady = true;
-            event.target.mute(); // ปิดเสียงไว้ก่อน
-        }
-
-        // ฟังก์ชันอัปเดตสถานะปุ่มเพลง
-        function updateMusicButton() {
-            const musicButton = document.getElementById('music-button');
-            let icon = isPlaying ? '🎶' : '🎵';
-            let status = isMuted ? ' (ปิดเสียง)' : '';
-            
-            if (isPlaying && isMuted) {
-                 musicButton.innerHTML = `${icon} เปิดเสียง`;
-                 musicButton.style.borderColor = 'orange'; // เน้นว่าต้องเปิดเสียง
-                 musicButton.style.color = 'orange';
-            } else if (isPlaying && !isMuted) {
-                musicButton.innerHTML = `${icon} หยุดเพลง`;
-                musicButton.style.borderColor = 'var(--primary-color)';
-                musicButton.style.color = 'var(--primary-color)';
-            } else {
-                musicButton.innerHTML = `${icon} ${MUSIC_TITLE}`;
-                musicButton.style.borderColor = 'var(--primary-color)';
-                musicButton.style.color = 'var(--primary-color)';
-            }
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.PLAYING) {
-                isPlaying = true;
-            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
-                isPlaying = false;
-            }
-            isMuted = player.isMuted();
-            updateMusicButton();
-        }
-
-        // ฟังก์ชันสำหรับสลับการเล่น/หยุดเพลงด้วยตนเอง
-        function toggleMusic() {
-            if (!playerReady) return;
-
-            if (isPlaying) {
-                if (!isMuted) {
-                    player.pauseVideo();
-                } else {
-                    // ถ้าเพลงเล่นอยู่แต่ปิดเสียงอยู่ ให้เปิดเสียง
-                    player.unMute();
-                    isMuted = false;
-                }
-            } else {
-                player.playVideo();
-                // ถ้าเริ่มเล่นด้วยปุ่มนี้ ให้เปิดเสียงทันที
-                player.unMute();
-                isMuted = false;
-            }
-            updateMusicButton();
-        }
-        
-        // ฟังก์ชันลองเล่นเพลงซ้ำ (แก้ไข Autoplay)
-        function tryPlayMusic(attempts) {
-            if (!playerReady || attempts <= 0) return;
-            
-            player.playVideo().catch(error => {
-                console.warn("Autoplay blocked. Retrying or muting...");
-                
-                // ถ้ายืนยันว่าเล่นไม่ได้ ให้ลองเล่นแบบปิดเสียง
-                if (attempts === 1) {
-                    player.mute();
-                    player.playVideo();
-                    alert(`💡 เพลง ${MUSIC_TITLE} เริ่มเล่นแล้ว แต่เบราว์เซอร์บังคับปิดเสียงไว้! กรุณากดปุ่ม "เปิดเสียง" ที่มุมขวาบนเพื่อฟังครับ/ค่ะ`);
-                }
-                
-                setTimeout(() => tryPlayMusic(attempts - 1), 500);
-            });
-        }
-
-        // *** 2. Typing Effect ***
+        // *** 1. Typing Effect Code ***
         const message = 
             "คุณคือปาฏิหาริย์ที่ฉันรอคอยมาตลอดชีวิต " +
             "ทุกช่วงเวลาที่อยู่กับคุณคือความสุขที่ไม่มีวันจบสิ้น " +
@@ -346,7 +210,7 @@
             "**ฉันรักคุณที่สุดในจักรวาลนี้**";
         
         let i = 0;
-        const speed = 50;
+        const speed = 50; // ความเร็วในการพิมพ์ (มิลลิวินาทีต่อตัวอักษร)
         const typingElement = document.getElementById("typing-text");
         let typingStarted = false;
 
@@ -355,6 +219,7 @@
             if (i < message.length) {
                 let char = message.charAt(i);
                 
+                // ตรวจสอบ Markdown สำหรับการ Bold (**คำ**)
                 if (char === '*' && message.substring(i, i + 2) === '**') {
                     typingElement.innerHTML += '<strong>';
                     i += 2; 
@@ -376,34 +241,26 @@
             }
         }
         
-        // *** 3. Flip Card Function (FIXED: Final Attempt) ***
+        // *** 2. Flip Card Function ***
         function flipCard() {
             const wrapper = document.getElementById('card-wrapper');
             const button = document.getElementById('open-button');
             
-            // 1. สั่งเล่นเพลงทันทีที่คลิก (ใช้การ Try/Retry)
-            if (playerReady && !isPlaying) {
-                tryPlayMusic(3); 
-            }
-
-            // 2. พลิกการ์ด
+            // พลิกการ์ด
             wrapper.classList.toggle('flipped'); 
 
             if (wrapper.classList.contains('flipped')) {
-                // อัปเดต UI ปุ่ม
+                // เมื่อพลิกการ์ด: อัปเดต UI ปุ่ม
                 button.textContent = 'เลื่อนลงเพื่ออ่าน'; 
                 button.style.backgroundColor = '#0c142c';
                 button.style.color = 'var(--secondary-color)';
                 
-                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดแล้ว 1.2 วินาที
+                // เริ่มพิมพ์ข้อความหลังจากพลิกการ์ดแล้ว 1.2 วินาที และยังไม่เคยพิมพ์มาก่อน
                 if (!typingStarted) {
                     setTimeout(typeWriter, 1200); 
                 }
             } else {
-                // เมื่อพลิกกลับ: หยุดเพลง
-                if (player) {
-                    player.pauseVideo();
-                }
+                // เมื่อพลิกกลับ: อัปเดต UI ปุ่ม
                 button.textContent = 'เปิดผนึกจดหมาย';
                 button.style.backgroundColor = 'var(--primary-color)';
                 button.style.color = 'white';
