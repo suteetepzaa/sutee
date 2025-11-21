@@ -35,32 +35,43 @@
   .heart:after{left:10px;top:0;}
   @keyframes fall{0%{transform:translateY(0) rotate(45deg) scale(0.5);opacity:1;} 100%{transform:translateY(100vh) rotate(45deg) scale(1);opacity:0;}}
 
-  /* กล่องข้อความเซอร์ไพรส์ */
-  .popup{
+  /* กล่องของขวัญ */
+  .gift{
     position:fixed;
-    top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
-    background:#ffe6f0;
-    padding:30px 40px;
-    border-radius:20px;
+    top:50%;left:50%;transform:translate(-50%,-50%);
+    width:200px;height:200px;background:#ff4ecb;border-radius:20px;
     box-shadow:0 10px 40px rgba(255,78,203,0.5);
-    text-align:center;
-    transition:0.5s;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
     z-index:10;
+    transition:0.5s;
+    overflow:hidden;
   }
-  .popup.show{transform:translate(-50%,-50%) scale(1);}
-  .popup h2{margin:0;color:#ff1a75;}
-  .popup button{margin-top:20px;padding:10px 20px;border:none;border-radius:12px;background:#ff4ecb;color:white;cursor:pointer;}
+  .gift.open{
+    width:300px;height:300px;background:#ffe6f0;
+    border-radius:30px;
+  }
+  .gift-text{
+    opacity:0;
+    transition:0.5s;
+    font-size:1.3rem;
+    color:#ff1a75;
+    text-align:center;
+    padding:20px;
+  }
+  .gift.open .gift-text{
+    opacity:1;
+  }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>รักเธอที่สุด 💖</h1>
   <p>ถึง [ชื่อแฟนของคุณ] ♥</p>
-  <button class="btn" onclick="showPopup()">กดดูเซอร์ไพรส์</button>
+  <button class="btn" onclick="openGift()">กดดูของขวัญ</button>
 </div>
-<div class="popup" id="popup">
-  <h2>คุณคือคนพิเศษที่สุดในชีวิตของฉัน 💖</h2>
-  <button onclick="closePopup()">ปิด</button>
+<div class="gift" id="gift">
+  <div class="gift-text">คุณคือคนพิเศษที่สุดในชีวิตของฉัน 💖</div>
 </div>
 <script>
 function createHeart(){
@@ -75,11 +86,8 @@ function createHeart(){
 }
 setInterval(createHeart,200);
 
-function showPopup(){
-  document.getElementById('popup').classList.add('show');
-}
-function closePopup(){
-  document.getElementById('popup').classList.remove('show');
+function openGift(){
+  document.getElementById('gift').classList.add('open');
 }
 </script>
 </body>
