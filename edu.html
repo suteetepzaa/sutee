@@ -58,7 +58,6 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            margin-top: 4px;
         }
         .btn-ge:hover {
             background-color: #3b82f6;
@@ -68,7 +67,8 @@
 </head>
 <body class="p-6">
 
-    <div class="max-w-[1100px] mx-auto">
+    <div class="max-w-[1100px] mx-auto space-y-4">
+        
         <div class="shadow-sm border border-gray-100 overflow-hidden rounded-sm bg-white">
             <table>
                 <thead>
@@ -159,17 +159,18 @@
                     </tr>
                 </tbody>
             </table>
-
-            <div class="p-4 bg-white border-t border-gray-100 flex items-center gap-3">
-                <span class="text-gray-600 font-medium text-sm">หมวดวิชาศึกษาทั่วไป:</span>
-                <button class="btn-ge">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
-                    </svg>
-                    ภาษากับการสื่อสาร
-                </button>
-            </div>
         </div>
+
+        <div class="p-4 bg-white shadow-sm border border-gray-100 rounded-sm flex items-center gap-3">
+            <span class="text-gray-600 font-medium text-sm">หมวดวิชาศึกษาทั่วไป:</span>
+            <button class="btn-ge">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+                </svg>
+                ภาษากับการสื่อสาร
+            </button>
+        </div>
+
     </div>
 
 </body>
