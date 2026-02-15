@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KU Academic Transcript</title>
+    <title>KU Academic Transcript - Updated</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body { 
-            font-family: 'Sarabun', sans-serif; 
+            font-family: 'Prompt', sans-serif; 
             background-color: #f8fbfe;
             color: #444;
         }
@@ -25,6 +25,7 @@
             padding: 14px 16px; 
             border-bottom: 1px dotted #e2e8f0;
             font-size: 14px;
+            vertical-align: top;
         }
         .credit-column { 
             background-color: #e3f5ff; 
@@ -32,9 +33,17 @@
             font-weight: 600; 
             text-align: center;
             width: 90px;
+            vertical-align: middle;
         }
         .grade-red { color: #ff0000; font-weight: bold; }
         .grade-green { color: #10b981; font-weight: bold; }
+        .status-note {
+            color: #3b82f6;
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+            font-weight: 400;
+        }
         .text-center { text-align: center; }
     </style>
 </head>
@@ -55,84 +64,90 @@
                 <tr>
                     <td>วิชาบังคับ 01403111 เคมีทั่วไป/ General Chemistry</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">67 / ภาคต้น</td>
+                    <td class="text-center text-gray-400">67 / ภาคต้น</td>
                     <td class="text-center grade-red">W</td>
                     <td class="credit-column">4</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01403111 เคมีทั่วไป/ General Chemistry</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">68 / ภาคฤดูร้อน</td>
+                    <td class="text-center text-gray-400">68 / ภาคฤดูร้อน</td>
                     <td class="text-center grade-green">C+</td>
                     <td class="credit-column">4</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01403112 ปฏิบัติการเคมีทั่วไป/ Laboratory in General Chemistry</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">67 / ภาคต้น</td>
+                    <td class="text-center text-gray-400">67 / ภาคต้น</td>
                     <td class="text-center grade-red">F</td>
                     <td class="credit-column">1</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01403112 ปฏิบัติการเคมีทั่วไป/ Laboratory in General Chemistry</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">68 / ภาคฤดูร้อน</td>
+                    <td class="text-center text-gray-400">68 / ภาคฤดูร้อน</td>
                     <td class="text-center grade-green">C+</td>
                     <td class="credit-column">1</td>
                 </tr>
                 <tr>
-                    <td>วิชาบังคับ 01403221 เคมีอินทรีย์/ Organic Chemistry</td>
+                    <td>
+                        วิชาบังคับ 01403221 เคมีอินทรีย์/ Organic Chemistry
+                        <span class="status-note">นิสิตแจ้งความประสงค์ขอลงทะเบียนเรียน 69 / ภาคฤดูร้อน</span>
+                    </td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">- / </td>
+                    <td class="text-center text-gray-400">- / </td>
                     <td class="text-center"></td>
                     <td class="credit-column">4</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01403222 ปฏิบัติการเคมีอินทรีย์/ Laboratory in Organic Chemistry</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">- / </td>
+                    <td class="text-center text-gray-400">- / </td>
                     <td class="text-center"></td>
                     <td class="credit-column">1</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01419211 จุลชีววิทยาทั่วไป/ General Microbiology</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">68 / ภาคต้น</td>
+                    <td class="text-center text-gray-400">68 / ภาคต้น</td>
                     <td class="text-center grade-green">D</td>
                     <td class="credit-column">3</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01419214 จุลชีววิทยาพื้นฐานภาคปฏิบัติการ / Laboratory in Fundamental Microbiology</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">68 / ภาคต้น</td>
+                    <td class="text-center text-gray-400">68 / ภาคต้น</td>
                     <td class="text-center grade-green">D+</td>
                     <td class="credit-column">1</td>
                 </tr>
                 <tr>
-                    <td>วิชาบังคับ 01422111 หลักสถิติ/ Principles of Statistics</td>
+                    <td>
+                        วิชาบังคับ 01422111 หลักสถิติ/ Principles of Statistics
+                        <span class="status-note">นิสิตแจ้งความประสงค์ขอลงทะเบียนเรียน 69 / ภาคฤดูร้อน</span>
+                    </td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">- / </td>
+                    <td class="text-center text-gray-400">- / </td>
                     <td class="text-center"></td>
                     <td class="credit-column">3</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01424111 หลักชีววิทยา/ Principles of Biology</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">67 / ภาคต้น</td>
+                    <td class="text-center text-gray-400">67 / ภาคต้น</td>
                     <td class="text-center grade-red">F</td>
                     <td class="credit-column">3</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01424111 หลักชีววิทยา/ Principles of Biology</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">67 / ภาคปลาย</td>
+                    <td class="text-center text-gray-400">67 / ภาคปลาย</td>
                     <td class="text-center grade-green">D+</td>
                     <td class="credit-column">3</td>
                 </tr>
                 <tr>
                     <td>วิชาบังคับ 01424112 ชีววิทยาภาคปฏิบัติการ/ Laboratory for Biology</td>
                     <td class="text-center">-</td>
-                    <td class="text-center text-gray-500">67 / ภาคต้น</td>
+                    <td class="text-center text-gray-400">67 / ภาคต้น</td>
                     <td class="text-center grade-green">D</td>
                     <td class="credit-column">1</td>
                 </tr>
