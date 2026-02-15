@@ -63,11 +63,38 @@
             background-color: #3b82f6;
             color: white;
         }
+
+        /* กรอบประกาศใหม่ */
+        .announcement-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body class="p-6">
 
     <div class="max-w-[1100px] mx-auto space-y-4">
+        
+        <div class="announcement-box shadow-sm">
+            <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <h3 class="text-blue-800 font-semibold text-base">ประกาศสถานะการลงทะเบียน ภาคฤดูร้อน พ.ศ. 2569</h3>
+                    <p class="text-blue-700 text-sm mt-1 leading-relaxed">
+                        นิสิตที่แจ้งความประสงค์ลงทะเบียนเรียน ภาคฤดูร้อน พ.ศ. 2569 ระบบขึ้นสถานะ 
+                        <span class="font-bold underline">"นิสิตแจ้งความประสงค์ขอลงทะเบียนเรียน 69 / ภาคฤดูร้อน"</span> 
+                        เรียบร้อยแล้ว <br>
+                        <strong>หมายเหตุ:</strong> นิสิตต้องชำระค่าธรรมเนียมการศึกษาในช่วงวันที่ 
+                        <span class="bg-blue-200 px-1 rounded text-blue-900 font-medium">7 - 10 เมษายน 2569</span>
+                    </p>
+                </div>
+            </div>
+        </div>
         
         <div class="shadow-sm border border-gray-100 overflow-hidden rounded-sm bg-white">
             <table>
@@ -84,7 +111,7 @@
                     <tr>
                         <td>วิชาบังคับ 01403111 เคมีทั่วไป/ General Chemistry</td>
                         <td class="text-center">-</td>
-                        <td class="text-center text-gray-400">67 / ภาคต้น</td>
+                        <td class="text-center text-gray-400">67 /  ภาคต้น</td>
                         <td class="text-center grade-red">W</td>
                         <td class="credit-column">4</td>
                     </tr>
