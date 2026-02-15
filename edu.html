@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Transcript Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; }
+        .grade-f { color: #ef4444; font-weight: bold; }
+        .grade-w { color: #ef4444; font-weight: bold; }
+        .grade-pass { color: #10b981; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-50 p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+        <div class="bg-slate-800 p-6 text-white">
+            <h1 class="text-2xl font-semibold">โครงสร้างหลักสูตรและผลการเรียน</h1>
+            <p class="text-slate-400 text-sm">ข้อมูลสรุปรายวิชาบังคับและคะแนนที่ได้รับ</p>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100 text-slate-600 uppercase text-sm leading-normal">
+                        <th class="py-4 px-6 font-semibold">รหัส/ชื่อวิชา</th>
+                        <th class="py-4 px-6 font-semibold text-center">ปี/ภาค</th>
+                        <th class="py-4 px-6 font-semibold text-center">เกรด</th>
+                        <th class="py-4 px-6 font-semibold text-center text-emerald-600">หน่วยกิต</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-700 text-sm">
+                    
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold">01403111</span>
+                            <span class="text-slate-500">เคมีทั่วไป (General Chemistry)</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">67 / ภาคต้น</td>
+                        <td class="py-4 px-6 text-center grade-w">W</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">4</td>
+                    </tr>
+                    <tr class="border-b hover:bg-gray-50 transition bg-emerald-50/30">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold">01403111</span>
+                            <span class="text-slate-500 text-xs">(ลงทะเบียนซ่อม/ใหม่)</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">68 / ภาคฤดูร้อน</td>
+                        <td class="py-4 px-6 text-center grade-pass">C+</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">4</td>
+                    </tr>
+
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold">01403112</span>
+                            <span class="text-slate-500">ปฏิบัติการเคมีทั่วไป (Lab Gen Chem)</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">68 / ภาคฤดูร้อน</td>
+                        <td class="py-4 px-6 text-center grade-pass">C+</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">1</td>
+                    </tr>
+
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold">01419211</span>
+                            <span class="text-slate-500">จุลชีววิทยาทั่วไป (General Microbiology)</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">68 / ภาคต้น</td>
+                        <td class="py-4 px-6 text-center font-bold text-orange-500">D</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">3</td>
+                    </tr>
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold">01419214</span>
+                            <span class="text-slate-500">ปฏิบัติการจุลชีววิทยาพื้นฐาน</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">68 / ภาคต้น</td>
+                        <td class="py-4 px-6 text-center font-bold text-orange-500">D+</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">1</td>
+                    </tr>
+
+                    <tr class="border-b hover:bg-gray-50 transition">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold">01424111</span>
+                            <span class="text-slate-500">หลักชีววิทยา (Principles of Biology)</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">67 / ภาคปลาย</td>
+                        <td class="py-4 px-6 text-center font-bold text-orange-500">D+</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">3</td>
+                    </tr>
+
+                    <tr class="border-b hover:bg-gray-50 transition opacity-60 italic">
+                        <td class="py-4 px-6">
+                            <span class="block font-semibold text-slate-400">01403221</span>
+                            <span class="text-slate-400">เคมีอินทรีย์ (Organic Chemistry)</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">-</td>
+                        <td class="py-4 px-6 text-center">-</td>
+                        <td class="py-4 px-6 text-center font-bold text-emerald-600">4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="p-6 bg-gray-50 text-right border-t">
+            <p class="text-slate-500 text-xs">หมายเหตุ: วิชาที่ขึ้นตัวอักษรสีแดงคือวิชาที่ต้องลงทะเบียนเรียนใหม่หรือถอนรายวิชา</p>
+        </div>
+    </div>
+
+</body>
+</html>
